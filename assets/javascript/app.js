@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+  //Allow user to upload a picture
   window.addEventListener('load', function() {
     document.querySelector('input[type="file"]').addEventListener('change', function() {
         if (this.files && this.files[0]) {
@@ -11,8 +12,7 @@ $(document).ready(function() {
   });
   
   function imageIsLoaded() { 
-    alert(this.src);  // blob url
-    // update width and height ...
+    console.log(this.src);  // blob url
   }
 
 
