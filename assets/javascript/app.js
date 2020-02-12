@@ -15,9 +15,10 @@ $(document).ready(function() {
     console.log(this.src);  // blob url
   }
 
-
-  var term = "coffee";
-  var place = "NYC";
+//Yelp API
+  var term = "cocktail";
+  var place = "19335"; //input box zip code box
+  //location -- distance
   var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
   var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
@@ -34,10 +35,10 @@ $(document).ready(function() {
 
   //need to output emotion
   //request parameter of file upload image_file
-  var apiKeyFace = "Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3";
-  var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect/";
-  var apiSecretFace = "-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
-  var queryFaceURL = faceURL + apiKeyFace + apiSecretFace
+  var apiKeyFace = "Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
+  var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect/?term=";
+  var exampleURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mark_Twain_by_AF_Bradley.jpg/440px-Mark_Twain_by_AF_Bradley.jpg"
+  var queryFaceURL = faceURL + apiKeyFace + exampleURL
   $.ajax({
     url: queryFaceURL,
     method: "GET"
