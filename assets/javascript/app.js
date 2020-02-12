@@ -35,29 +35,32 @@ $(document).ready(function() {
 
   //need to output emotion
   //request parameter of file upload image_file
-  var apiKeyFace = "Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
-  var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect/?term=";
+  var apiKeyFace = "&api_key=Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
+  var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect/?";
   var exampleURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mark_Twain_by_AF_Bradley.jpg/440px-Mark_Twain_by_AF_Bradley.jpg"
-  var queryFaceURL = faceURL + apiKeyFace + exampleURL
+  var queryFaceURL = faceURL + apiKeyFace + "/image_url=" + exampleURL
   $.ajax({
     url: queryFaceURL,
     method: "GET"
   }).then(function(responseFace) {
     console.log(responseFace);
   })
+  
 
-  var food = "chicken";  
-  var recipeURL = "https://api.edamam.com/search/1cf40488/a1eaff5b1da4a145a0967af7fbfdfd0b/q=" + food;
+  
+
+  // var food = "chicken";  
+  // var recipeURL = "https://api.edamam.com/search/1cf40488/a1eaff5b1da4a145a0967af7fbfdfd0b/q=" + food;
     // foodAPIid = "1cf40488"
     // foodAPIkey = "a1eaff5b1da4a145a0967af7fbfdfd0b"
     
-    $.ajax({
-      url: recipeURL,
-      method: "GET",
-      dataType: "jsonp"
-    }).then(function(response) {
-      console.log(response)
-    }) 
+    // $.ajax({
+    //   url: recipeURL,
+    //   method: "GET",
+    //   dataType: "jsonp"
+    // }).then(function(response) {
+    //   console.log(response)
+    // }) 
     
     
 

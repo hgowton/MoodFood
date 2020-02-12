@@ -26,21 +26,39 @@
     <script src="https://developer.edamam.com/attribution/badge.js"></script>
     
     </header>
-    <body>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            
-            <div id="yelp">Yelp</div>
-            <input type='file' />
-            <br><img id="myImg" src="#" alt="your image" width="50%">
-            <div id="edamam-badge" data-color="white"></div>
-            
-          </div>
+  <body>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <h3>Upload Your Image Here:</h3>
+
+          <input type='file' />
+          <br><img id="myImg" src="#" alt="your image" width="50%">
+          <!-- <div id="edamam-badge" data-color="white"></div> -->
         </div>
+        <div class="col-md-8">
+          <form>
+          Mood:<br>
+          <input type="text" name="userMood"><br>
+          Age:<br>
+          <input type="tesxt" name="age" class="userAge">
+          </form>
+          <input type="button" value="Recipe">
+          <input type="button" value="Restaurant">
+          <input type="button" value="Cocktail">
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <h3>Suggestions:</h3>
       </div>
+    </div>
+    </div>
+  </div>
         
-      </body>
+</body>
 
 
 </html>
