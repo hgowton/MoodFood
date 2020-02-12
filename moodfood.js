@@ -28,6 +28,9 @@ $("#btn").on("click", function(){ //the submit button
         var restaurantNameGrab = response.data[i].name;
         var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
 
+        var picGrab = response.data[i].img;
+        var pic = $("<p>").text(picGrab);
+
         var starRatingGrab = response.data[i].starRating;
         var starRating = $("<p>").text("Rated: ", starRatingGrab);
 
