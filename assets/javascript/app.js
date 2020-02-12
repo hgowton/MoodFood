@@ -82,6 +82,56 @@ $(document).ready(function() {
     //   console.log(response)
     // }) 
     
+
+
+    
+
+var image = $("#grabtheimageinput")
+
+
+$("#btn").on("click", function(){ //the submit button
+    //will get facial reconitions emotion
+    var emotion = response.somethin.something.somthing 
+    //based on emotion do a key word search for local businesses
+    
+    for (var i=0; i<6; i++){
+        var restaurantNameGrab = response.data[i].name;
+        var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
+
+        var picGrab = response.data[i].img;
+        var pic = $("<p>").text(picGrab);
+
+        var starRatingGrab = response.data[i].starRating;
+        var starRating = $("<p>").text("Rated: ", starRatingGrab);
+
+        var descriptionGrab = response.data[i].description;
+        var description = $("<p>").text("Overveiw: ", descriptionGrab);
+
+        var cocktailGrab = response.data[i].alcohol;
+        var cocktail = $("<p>").text("wanna spice it up? ", cocktailGrab);
+
+
+        var age = $("#ageinput");
+
+        if (age < 21){
+            $("#tablerestaurant").append(restaurantName);
+            $("#star-rating").append(starRating);
+            $("description").append(description);
+            $("cocktail").append(cocktail);
+
+        }
+        else{
+            $("#tablerestaurant").append(restaurantName);
+            $("#star-rating").append(starRating);
+            $("description").append(description);
+
+        }
+    }
+});
+
+
+
+
     
 
 });
