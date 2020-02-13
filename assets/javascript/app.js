@@ -95,20 +95,26 @@ $("#btn").on("click", function(){ //the submit button
     //based on emotion do a key word search for local businesses
     
     for (var i=0; i<6; i++){
-        var restaurantNameGrab = response.data[i].name;
+        var restaurantNameGrab = response.businesses[i].name;
         var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
 
-        var picGrab = response.data[i].img;
-        var pic = $("<p>").text(picGrab);
+        var picGrab = response.businesses[i].image_url;
+        var pic = $("<img>").append(picGrab);
 
-        var starRatingGrab = response.data[i].starRating;
+        var starRatingGrab = response.businesses[i].rating;
         var starRating = $("<p>").text("Rated: ", starRatingGrab);
 
-        var descriptionGrab = response.data[i].description;
-        var description = $("<p>").text("Overveiw: ", descriptionGrab);
+        var priceGrab = response.businesses[i].price;
+        var price = $("<p>").text("Price: ", priceGrab);
 
-        var cocktailGrab = response.data[i].alcohol;
-        var cocktail = $("<p>").text("wanna spice it up? ", cocktailGrab);
+        var addressGrabAddress = response.businesses[i].location.display_address[0];
+        var addressGrabCity = response.businesses[i].location.display_address[1];
+        var address = $("<p>").text("Address: ", addressGrabAddress, addressGrabCity);
+
+
+
+        var cocktailGrab = response.businesses[i].alcohol;
+        var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
 
 
         var age = $("#ageinput");
@@ -116,14 +122,15 @@ $("#btn").on("click", function(){ //the submit button
         if (age < 21){
             $("#tablerestaurant").append(restaurantName);
             $("#star-rating").append(starRating);
-            $("description").append(description);
+            $("price").append(price);
             $("cocktail").append(cocktail);
+            $("#address").append(address)
 
         }
         else{
             $("#tablerestaurant").append(restaurantName);
             $("#star-rating").append(starRating);
-            $("description").append(description);
+            $("price").append(price);
 
         }
     }
