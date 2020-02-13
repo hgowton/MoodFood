@@ -182,6 +182,63 @@ $.ajax({
 
 
     
+
+
+    
+
+var image = $("#grabtheimageinput")
+
+
+$("#btn").on("click", function(){ //the submit button
+    //will get facial reconitions emotion
+    var emotion = response.somethin.something.somthing 
+    //based on emotion do a key word search for local businesses
+    
+    for (var i=0; i<6; i++){
+        var restaurantNameGrab = response.businesses[i].name;
+        var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
+
+        var picGrab = response.businesses[i].image_url;
+        var pic = $("<img>").append(picGrab);
+
+        var starRatingGrab = response.businesses[i].rating;
+        var starRating = $("<p>").text("Rated: ", starRatingGrab);
+
+        var priceGrab = response.businesses[i].price;
+        var price = $("<p>").text("Price: ", priceGrab);
+
+        var addressGrabAddress = response.businesses[i].location.display_address[0];
+        var addressGrabCity = response.businesses[i].location.display_address[1];
+        var address = $("<p>").text("Address: ", addressGrabAddress, addressGrabCity);
+
+
+
+        var cocktailGrab = response.businesses[i].alcohol;
+        var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
+
+
+        var age = $("#ageinput");
+
+        if (age < 21){
+            $("#tablerestaurant").append(restaurantName);
+            $("#star-rating").append(starRating);
+            $("price").append(price);
+            $("cocktail").append(cocktail);
+            $("#address").append(address)
+
+        }
+        else{
+            $("#tablerestaurant").append(restaurantName);
+            $("#star-rating").append(starRating);
+            $("price").append(price);
+
+        }
+    }
+});
+
+
+
+
     
 
 });
