@@ -26,7 +26,6 @@
 
     <!-- Edamam API-->
     <script src="https://developer.edamam.com/attribution/badge.js"></script>
-    
     </head>
 
 
@@ -38,12 +37,22 @@
           <h5>We use your mood to help select your food.</h5>
           <br>
           <h3>Upload Your Image Here:</h3>
+        <div class="col-md-4">
+          <h3>Paste Image URL:</h3>
+          <form>
+            <input type="text" name="userImage" id="userImage">
+            <input id="submitUserImage" value="What's my Mood?" type="submit">
+          </form>
+          <div id="userImageDisplay"></div>
 
-          <input type='file' />
-          <br><img id="myImg" src="#" alt="your image" width="50%">
+          <!-- <input type='file' />
+          <br><img id="myImg" src="#" alt="your image" width="50%"> -->
           <!-- <div id="edamam-badge" data-color="white"></div> -->
         </div>
         <div class="col-md-8">
+          <!--Delected Mood input and replaced with H2 tag and div for emotion icons-->
+          <h2>Your Mood:</h2>
+          <div id="emotionsIcons"></div>
           <form>
           Age:<br>
           <input type="text" name="age" class="userAge">
@@ -62,6 +71,10 @@
       
       </div>
     </div>
-  </body>
+  </div>
+    
+
+ 
+</body>
   </html>
 
