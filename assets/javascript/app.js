@@ -149,14 +149,16 @@ $(document).ready(function() {
 })
   
 
-var image = $("#grabtheimageinput")
-
 $("#restaurantbtn").on("click", function(){
-  //based on emotion do a key word search for local businesses
+  //based on emotion do a key word search for local businesses??
+  var age = $(".userAge").val().trim();
+
+
+
   //Yelp API
   var term = "cocktail";
-  var place = "19335"; //input box zip code box
-  //location -- distance
+  var place = $(".userzip-code").val().trim(); 
+  console.log("zip code: ", place)
   var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
   var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
@@ -170,36 +172,42 @@ $("#restaurantbtn").on("click", function(){
   }).then(function(response) {
     console.log("this is response", response);
     
-    var restaurantInfo = $("<div class='restaurantInfo'>")
-    console.log("resturantInfo: ", restaurantInfo)
-    
     for (var i=0; i<5; i++){
-      
+
+      var restaurantDiv = $("<div class='col s3'>");
+
       var restaurantNameGrab = response.businesses[i].name;
-      var restaurantName =$("<p>").text(restaurantNameGrab);
-      restaurantName.addClass("restaurantName")
-      restaurantInfo.append(restaurantName);
+      var restaurantName =$("<h5>").text(restaurantNameGrab);
+      restaurantName.addClass("restaurantName");
+      restaurantDiv.append(restaurantName)
       
       var picGrab = response.businesses[i].image_url;
       var pic = $("<img>").attr("src", picGrab);
       pic.addClass("picture")
-      restaurantInfo.append(pic);
+      pic.attr("alt","restaurant image")
+      restaurantDiv.append(pic);
+      
+      var restaurantInfo = $("<div class='col s9'>");
 
       var starRatingGrab = response.businesses[i].rating;
-      var starRating = $("<p>").text("Rated: ", starRatingGrab);
+      var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
       starRating.addClass("rating")
       restaurantInfo.append(starRating);
 
       var priceGrab = response.businesses[i].price;
-      var price = $("<p>").text("Price: ", priceGrab);
+      var price = $("<p>").text("Price: " + priceGrab);
       price.addClass("price")
       restaurantInfo.append(price);
       
       var addressGrabAddress = response.businesses[i].location.display_address[0];
       var addressGrabCity = response.businesses[i].location.display_address[1];
-      var address = $("<p>").text("Address: ", addressGrabAddress, addressGrabCity);
+      var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+      + addressGrabCity);
       address.addClass("address")
       restaurantInfo.append(address);
+
+      var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
+      $("#restaurantTable").append(row);
         
 
         // var cocktailGrab = response.businesses[i].alcohol;
