@@ -151,10 +151,14 @@ $(document).ready(function() {
 
 $("#restaurantbtn").on("click", function(){
   //based on emotion do a key word search for local businesses??
+  var age = $(".userAge").val().trim();
+
+
+
   //Yelp API
   var term = "cocktail";
-  var place = "19335"; //input box zip code box
-  //location -- distance
+  var place = $(".userzip-code").val().trim(); 
+  console.log("zip code: ", place)
   var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
   var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
@@ -197,7 +201,8 @@ $("#restaurantbtn").on("click", function(){
       
       var addressGrabAddress = response.businesses[i].location.display_address[0];
       var addressGrabCity = response.businesses[i].location.display_address[1];
-      var address = $("<p>").text("Address: " + addressGrabAddress, addressGrabCity);
+      var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+      + addressGrabCity);
       address.addClass("address")
       restaurantInfo.append(address);
 
