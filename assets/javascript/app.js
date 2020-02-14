@@ -147,28 +147,13 @@ $(document).ready(function() {
     
   })
   
-  
-  
-//   //spoonacular - for API food and postman
-// //edamam
-// var startFood = "https://api.edamam.com/search?q="
-// var foodType = "chicken"
-// var foodAPIkey = "&app_key=a1eaff5b1da4a145a0967af7fbfdfd0b"
-// var foodAPIid = "&app+id=1cf40488"
-// var queryFoodURL = startFood + foodType + foodAPIid + foodAPIkey
-// $.ajax({
-//   url: queryFoodURL,
-//   method: "GET"
-// }).then(function(response) {
-//   console.log(response)
-// })
-
 
 
 var image = $("#grabtheimageinput")
 
 
 $("#restaurantbtn").on("click", function(){
+  //based on emotion do a key word search for local businesses
   //Yelp API
   var term = "cocktail";
   var place = "19335"; //input box zip code box
@@ -184,51 +169,44 @@ $("#restaurantbtn").on("click", function(){
       "Authorization" : "Bearer " + apiKey
     }
   }).then(function(response) {
-    console.log(response);
-  }); 
-  //based on emotion do a key word search for local businesses
-  
-  for (var i=0; i<6; i++){
-    var restaurantNameGrab = response.businesses[i].name;
-    var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
-console.log(restaurantName)
-        var picGrab = response.businesses[i].image_url;
-        var pic = $("<img>").append(picGrab);
+    console.log("this is response", response);
+    
+    var restaurantInfo = $("<div class='restaurantInfo'>")
+    console.log("resturantInfo: ", restaurantInfo)
+    
+    for (var i=0; i<5; i++){
+      
+      var restaurantNameGrab = response.businesses[i].name;
+      var restaurantName =$("<p>").text(restaurantNameGrab);
+      restaurantName.addClass("restaurantName")
+      restaurantInfo.append(restaurantName);
+      
+      var picGrab = response.businesses[i].image_url;
+      var pic = $("<img>").attr("src", picGrab);
+      pic.addClass("picture")
+      restaurantInfo.append(pic);
 
-        var starRatingGrab = response.businesses[i].rating;
-        var starRating = $("<p>").text("Rated: ", starRatingGrab);
+      var starRatingGrab = response.businesses[i].rating;
+      var starRating = $("<p>").text("Rated: ", starRatingGrab);
+      starRating.addClass("rating")
+      restaurantInfo.append(starRating);
 
-        var priceGrab = response.businesses[i].price;
-        var price = $("<p>").text("Price: ", priceGrab);
+      var priceGrab = response.businesses[i].price;
+      var price = $("<p>").text("Price: ", priceGrab);
+      price.addClass("price")
+      restaurantInfo.append(price);
+      
+      var addressGrabAddress = response.businesses[i].location.display_address[0];
+      var addressGrabCity = response.businesses[i].location.display_address[1];
+      var address = $("<p>").text("Address: ", addressGrabAddress, addressGrabCity);
+      address.addClass("address")
+      restaurantInfo.append(address);
+        
 
-        var addressGrabAddress = response.businesses[i].location.display_address[0];
-        var addressGrabCity = response.businesses[i].location.display_address[1];
-        var address = $("<p>").text("Address: ", addressGrabAddress, addressGrabCity);
+        // var cocktailGrab = response.businesses[i].alcohol;
+        // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
 
-
-
-        var cocktailGrab = response.businesses[i].alcohol;
-        var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
-
-
-        var age = $("#ageinput");
-
-        if (age < 21){
-            $(".restaurantName").append(restaurantName);
-            $(".pic").append(pic);
-            $("#star-rating").append(starRating);
-            $("price").append(price);
-            $("cocktail").append(cocktail);
-            $("#address").append(address);
-
-        }
-        else{
-            $("#tablerestaurant").append(restaurantName);
-            $("#star-rating").append(starRating);
-            $("price").append(price);
-            $("#address").append(address);
-
-        }
     }
-});
+  });
+}); 
 });
