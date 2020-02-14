@@ -1,22 +1,22 @@
 body {
-    background: url("../images/food.png");
+    background: url("./images/food.png");
 }
 
 
 .container {
-    background-color: wheat;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
 
 }
 
 .row {
-    background-color: white;
+    /* background-color: white; */
 }
 
-.col-md-4 {
+/* .col-md-4 {
     background-color: white;
 
-}
+} */
 
 /* input[type='file'] {
     background-color: lightskyblue;
