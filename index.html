@@ -16,6 +16,11 @@
     
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/f0b2e95a6d.js" crossorigin="anonymous"></script>
+    
+    <!-- Materialize -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  
 
     <!-- JQuery and JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -58,7 +63,7 @@
           <input type="text" name="age" class="userAge">
           </form>
           <input type="button" value="Recipe">
-          <input type="button" value="Restaurant">
+          <input id="restaurantbtn" type="button" value="Restaurant">
           <input type="button" value="Cocktail">
         </div>
     </div>
@@ -68,7 +73,25 @@
 
         <h3>Suggestions:</h3>
       </div>
-    </div> 
-</body>
-</html>
+    </div>
+
+    <div class="row">
+      <div class="col s3">
+        <h5 class="restaurantName">restaurant name</h5>
+        <img class="restaurant" alt="restaurant image">
+      </div>
+      <div class="col s9">
+        <h6>Rating: stars</h6>
+        <br>
+        <h6>Price: $$$</h6>
+      
+        <h6>Address: 123 address rd</h6>
+        <br>
+        <h6>Cocktail?!?!</h6>
+      </div>
+
+    </div>
+
+  </body>
+  </html>
 

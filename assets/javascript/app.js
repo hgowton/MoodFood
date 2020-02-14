@@ -16,23 +16,6 @@ $(document).ready(function() {
   // }
 
   
-  //Yelp API
-  var term = "cocktail";
-  var place = "19335"; //input box zip code box
-  //location -- distance
-  var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
-  var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
-  
-  $.ajax({
-    url: corsAnywhereUrl + queryURL,
-    method: "GET",
-    headers: {
-      "Authorization" : "Bearer " + apiKey
-    }
-  }).then(function(response) {
-    console.log(response);
-  }); 
   
   $("#submitUserImage").on("click", function(event) {
     event.preventDefault();
@@ -72,7 +55,7 @@ $(document).ready(function() {
       var sadness = emotionType.sadness;
       var surprise = emotionType.surprise;
       var neutral = emotionType.neutral;
-
+      
       //displays image that user uploaded as URL
       var displayUserImage = $("<img>")
       displayUserImage.attr("src", userImageURL)
@@ -101,7 +84,7 @@ $(document).ready(function() {
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
       }
-
+      
       if (disgust > 60){
         //create an image for anger if the disgust value from the image is greater than 60
         var disgustBtn = $("<img id='disgustBtn'>");
@@ -123,7 +106,7 @@ $(document).ready(function() {
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(fearBtn)
       }
-
+      
       if (sadness > 60){
         //create an image for sadness if the disgust value from the image is greater than 60
         var sadnessBtn = $("<img id='sadnessBtn'>");
@@ -145,7 +128,7 @@ $(document).ready(function() {
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(surpriseBtn)
       }
-
+      
       if (neutral > 60){
         //create an image for neutral if the anger value from the image is greater than 60
         var neutralBtn = $("<img id='neutralBtn'>");
@@ -156,48 +139,59 @@ $(document).ready(function() {
         //appends neutral btn to Mood div
         $("#emotionsIcons").prepend(neutralBtn) 
       }
-
-    
+      
+      
       //clear url input box
       $("#userImage").val("");    
     })
-
+    
   })
   
-
   
-//spoonacular - for API food and postman
-//edamam
-var startFood = "https://api.edamam.com/search?q="
-var foodType = "chicken"
-var foodAPIkey = "&app_key=a1eaff5b1da4a145a0967af7fbfdfd0b"
-var foodAPIid = "&app+id=1cf40488"
-var queryFoodURL = startFood + foodType + foodAPIid + foodAPIkey
-$.ajax({
-  url: queryFoodURL,
-  method: "GET"
-}).then(function(response) {
-  console.log(response)
-})
+  
+//   //spoonacular - for API food and postman
+// //edamam
+// var startFood = "https://api.edamam.com/search?q="
+// var foodType = "chicken"
+// var foodAPIkey = "&app_key=a1eaff5b1da4a145a0967af7fbfdfd0b"
+// var foodAPIid = "&app+id=1cf40488"
+// var queryFoodURL = startFood + foodType + foodAPIid + foodAPIkey
+// $.ajax({
+//   url: queryFoodURL,
+//   method: "GET"
+// }).then(function(response) {
+//   console.log(response)
+// })
 
 
-    
-
-
-    
 
 var image = $("#grabtheimageinput")
 
 
-$("#btn").on("click", function(){ //the submit button
-    //will get facial reconitions emotion
-    var emotion = response.somethin.something.somthing 
-    //based on emotion do a key word search for local businesses
-    
-    for (var i=0; i<6; i++){
-        var restaurantNameGrab = response.businesses[i].name;
-        var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
-
+$("#restaurantbtn").on("click", function(){
+  //Yelp API
+  var term = "cocktail";
+  var place = "19335"; //input box zip code box
+  //location -- distance
+  var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+  var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+  
+  $.ajax({
+    url: corsAnywhereUrl + queryURL,
+    method: "GET",
+    headers: {
+      "Authorization" : "Bearer " + apiKey
+    }
+  }).then(function(response) {
+    console.log(response);
+  }); 
+  //based on emotion do a key word search for local businesses
+  
+  for (var i=0; i<6; i++){
+    var restaurantNameGrab = response.businesses[i].name;
+    var restaurantName =$("<p>").text(restaurantNameGrab);//<p> tag from table or whatever it is
+console.log(restaurantName)
         var picGrab = response.businesses[i].image_url;
         var pic = $("<img>").append(picGrab);
 
@@ -220,25 +214,21 @@ $("#btn").on("click", function(){ //the submit button
         var age = $("#ageinput");
 
         if (age < 21){
-            $("#tablerestaurant").append(restaurantName);
+            $(".restaurantName").append(restaurantName);
+            $(".pic").append(pic);
             $("#star-rating").append(starRating);
             $("price").append(price);
             $("cocktail").append(cocktail);
-            $("#address").append(address)
+            $("#address").append(address);
 
         }
         else{
             $("#tablerestaurant").append(restaurantName);
             $("#star-rating").append(starRating);
             $("price").append(price);
+            $("#address").append(address);
 
         }
     }
 });
-
-
-
-
-    
-
 });
