@@ -18,81 +18,71 @@
     <script src="https://kit.fontawesome.com/f0b2e95a6d.js" crossorigin="anonymous"></script>
     
     <!-- Materialize -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    
     <!-- JQuery and JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="./assets/javascript/app.js"></script>
     <title>Mood Food</title>
     <!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <!-- Edamam API-->
     <script src="https://developer.edamam.com/attribution/badge.js"></script>
-    </head>
-
-
+  </head>
+  
+  
   <body>
-  <div class="container">
-    <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col-md-7">
           <h1>The Mood Food App!</h1>
           <h5>We use your mood to help select your food.</h5>
           <br>
           <h3>Upload Your Image Here:</h3>
-        <div class="col-md-4">
-          <h3>Paste Image URL:</h3>
-          <form>
-            <input type="text" name="userImage" id="userImage">
-            <input id="submitUserImage" value="What's my Mood?" type="submit">
-          </form>
-          <div id="userImageDisplay"></div>
-
-          <!-- <input type='file' />
-          <br><img id="myImg" src="#" alt="your image" width="50%"> -->
-          <!-- <div id="edamam-badge" data-color="white"></div> -->
+          <div class="col-md-4">
+            <h3>Paste Image URL:</h3>
+            <form>
+              <input type="text" name="userImage" id="userImage">
+              <input id="submitUserImage" value="What's my Mood?" type="submit">
+            </form>
+            <div id="userImageDisplay"></div>
+            
+            <!-- <input type='file' />
+              <br><img id="myImg" src="#" alt="your image" width="50%"> -->
+            <!-- <div id="edamam-badge" data-color="white"></div> -->
+          </div>
+          <div class="col-md-8">
+            <!--Delected Mood input and replaced with H2 tag and div for emotion icons-->
+            <h2>Your Mood:</h2>
+            <div id="emotionsIcons"></div>
+            <form>
+              Age:<br>
+              <input type="text" name="age" class="userAge">
+            </form>
+            <input type="button" value="Recipe">
+            <input id="restaurantbtn" type="button" value="Restaurant">
+            <input type="button" value="Cocktail">
+          </div>
         </div>
-        <div class="col-md-8">
-          <!--Delected Mood input and replaced with H2 tag and div for emotion icons-->
-          <h2>Your Mood:</h2>
-          <div id="emotionsIcons"></div>
-          <form>
-          Age:<br>
-          <input type="text" name="age" class="userAge">
-          </form>
-          <input type="button" value="Recipe">
-          <input id="restaurantbtn" type="button" value="Restaurant">
-          <input type="button" value="Cocktail">
+        
+        <div class="row">
+          <div class="col-md-12">
+            
+            <h3>Suggestions:</h3>
+          </div>
         </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-
-        <h3>Suggestions:</h3>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col s3">
-        <h5 class="restaurantName">restaurant name</h5>
-        <img class="restaurant" alt="restaurant image">
-      </div>
-      <div class="col s9">
-        <h6>Rating: stars</h6>
-        <br>
-        <h6>Price: $$$</h6>
       
-        <h6>Address: 123 address rd</h6>
-        <br>
-        <h6>Cocktail?!?!</h6>
+        <div id="restaurantTable">
+          
+        </div>
+        
       </div>
-
-    </div>
-
-  </body>
-  </html>
-
-
+      
+    </body>
+    </html>
+    
+    
+    
