@@ -1,6 +1,5 @@
 $(document).ready(function() {
   
-  
   $("#submitUserImage").on("click", function(event) {
     event.preventDefault();
     var userImageURL = $("#userImage").val().trim();
@@ -130,30 +129,11 @@ $(document).ready(function() {
     })  
   })
   
-
-//spoonacular - for API food and postman &number=2
-  var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
-  var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
-  var spoonCuisine = "indian"
-  var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
-  console.log(querySpoonURL)
-  $.ajax({
-    url: querySpoonURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response)
-    console.log("id number" + response.results[3].id)
-    recipeCall(response.results[3].id);
-    recipeCall(response.results[2].id);
-    recipeCall(response.results[1].id);
-})
   
+  $("#restaurantbtn").on("click", function(){
 
-$("#restaurantbtn").on("click", function(){
   //based on emotion do a key word search for local businesses??
   var age = $(".userAge").val().trim();
-
-
 
   //Yelp API
   var term = "cocktail";
@@ -173,7 +153,7 @@ $("#restaurantbtn").on("click", function(){
     console.log("this is response", response);
     
     for (var i=0; i<5; i++){
-
+      
       var restaurantDiv = $("<div class='col s3'>");
 
       var restaurantNameGrab = response.businesses[i].name;
@@ -188,12 +168,12 @@ $("#restaurantbtn").on("click", function(){
       restaurantDiv.append(pic);
       
       var restaurantInfo = $("<div class='col s9'>");
-
+      
       var starRatingGrab = response.businesses[i].rating;
       var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
       starRating.addClass("rating")
       restaurantInfo.append(starRating);
-
+      
       var priceGrab = response.businesses[i].price;
       var price = $("<p>").text("Price: " + priceGrab);
       price.addClass("price")
@@ -205,15 +185,106 @@ $("#restaurantbtn").on("click", function(){
       + addressGrabCity);
       address.addClass("address")
       restaurantInfo.append(address);
-
+      
       var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
-      $("#restaurantTable").append(row);
-        
-
-        // var cocktailGrab = response.businesses[i].alcohol;
-        // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
-
+      $("#table").append(row);
+      
+      
+      // var cocktailGrab = response.businesses[i].alcohol;
+      // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
+      
     }
   });
 }); 
-});
+
+$("#recipebtn").on("click", function(){
+  //based on emotion do a key word search for recipe??
+
+
+  
+  //spoonacular - for API food and postman &number=2
+    var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
+    var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
+    var spoonCuisine = "indian" //emotion input???
+    var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
+    console.log(querySpoonURL)
+    $.ajax({
+      url: querySpoonURL,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response)
+      console.log("id number" + response.results[3].id)
+      // recipeCall(response.results[3].id);
+      // recipeCall(response.results[2].id);
+      // recipeCall(response.results[1].id);
+   
+      
+      
+
+      
+      for (var i=0; i<5; i++){
+        
+        var recipeDiv = $("<div class='col s3'>");
+        
+        var recipeNameGrab = response.results[i].title;
+        var recipeName =$("<h5>").text(recipeNameGrab);
+        recipeName.addClass("recipeName");
+        recipeDiv.append(recipeName)
+        console.log("recipe name: ", recipeNameGrab)
+
+      //doesn't like the image url for now
+        // var picGrab = response.results[i].imageUrls[0];
+        // var pic = $("<img>").attr("src", picGrab);
+        // pic.addClass("picture")
+        // pic.attr("alt","recipe image")
+        // recipeDiv.append(pic);
+        
+      // var recipeInfo = $("<div class='col s9'>");
+      
+      // var starRatingGrab = response.results[i].rating;
+      // var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
+      // starRating.addClass("rating")
+      // restaurantInfo.append(starRating);
+      
+      // var priceGrab = response.results[i].price;
+      // var price = $("<p>").text("Price: " + priceGrab);
+      // price.addClass("price")
+      // recipeInfo.append(price);
+      
+      // var addressGrabAddress = response.results[i].location.display_address[0];
+      // var addressGrabCity = response.results[i].location.display_address[1];
+      // var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+      // + addressGrabCity);
+      // address.addClass("address")
+      // recipeInfo.append(address);
+      
+      var row = $("<div class='row'>").append(recipeDiv); //+ recipeInfo at some point
+      $("#table").append(row);
+      
+      
+    }
+  });
+  });
+}); 
+
+
+
+//ways we could possibly make this work based on "mood"
+  //1)put in each emotion if statement the onclick restaurant and onclick recipe function
+        // just change the for loop number to N (N for Number) and set N to a different number in each if statement 
+        // then it will grab from a different parts of the yelp API-outputting different restaurants or different recipes
+          //example: if (anger){
+            // N=6
+            //for (var i=N; i< N+5; i++){
+            // (the code that outputs the information)
+    //issue: with this one is its pretty DRY--like a lot of repeating that we should probably avoid, even if it is just copy and pasting 
+
+  //2) try and grab the emotion button that has been displayed
+        // set each emotion btn equal to a number and input that number into the for loop
+          //same concept as the above situation, it'll grab different objects in the array
+      //issue: this would solve the DRY issue from above but im not sure if scope would allow us to do this. 
+
+  //3) set the variable 'term' for restaurant API and 'spoonCuisine' for recipe API equal to whatever is the strongest emotion 
+    //this would probably follow option 2) in the way that we would try to grab the emotion button that is displayed
+    // have the API do a search for the food based on the emotion
+    //issue: i'm not sure if typing in an emotion as a key word would mess up the api's but i'm thinking this would probably be the best option ig it works
