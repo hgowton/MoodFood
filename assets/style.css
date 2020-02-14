@@ -9,26 +9,26 @@ body {
 
 }
 
-.row {
-    /* background-color: white; */
+/* "What's my mood" input box  */
+input[id=submitUserImage] {
+    color: white;
+    background-color: lightskyblue;
+    font-size: 20px;
 }
 
-/* .col-md-4 {
-    background-color: white;
-
-} */
-
-/* input[type='file'] {
-    background-color: lightskyblue;
-} */
+/* Emoticon box -- JS */
+.emotionBtn {
+    width: 5%;
+}
 
 .col-md-8 {
     font-size: 25px;
 }
 
+
 input[type=text] {
     color: black;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     border: none;
 
@@ -42,6 +42,7 @@ input[type=button] {
 }
 
 .col-md-12 {
-    background-color: powderblue;
+    background-color: lightskyblue;
     border-style: groove;
+    color: whitesmoke
 }
