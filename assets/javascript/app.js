@@ -1,20 +1,4 @@
 $(document).ready(function() {
-
-  //REMOVE -- no longer in use: Allow user to upload a picture
-  // window.addEventListener('load', function() {
-  //   document.querySelector('input[type="file"]').addEventListener('change', function() {
-  //       if (this.files && this.files[0]) {
-  //           var img = document.querySelector('img');  // $('img')[0]
-  //           img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-  //           img.onload = imageIsLoaded;
-  //       }
-  //   });
-  // });
-  
-  // function imageIsLoaded() { 
-  //   console.log(this.src);  // blob url
-  // }
-
   
   
   $("#submitUserImage").on("click", function(event) {
@@ -143,14 +127,29 @@ $(document).ready(function() {
       
       //clear url input box
       $("#userImage").val("");    
-    })
-    
+    })  
   })
   
 
+//spoonacular - for API food and postman &number=2
+  var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
+  var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
+  var spoonCuisine = "indian"
+  var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
+  console.log(querySpoonURL)
+  $.ajax({
+    url: querySpoonURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response)
+    console.log("id number" + response.results[3].id)
+    recipeCall(response.results[3].id);
+    recipeCall(response.results[2].id);
+    recipeCall(response.results[1].id);
+})
+  
 
 var image = $("#grabtheimageinput")
-
 
 $("#restaurantbtn").on("click", function(){
   //based on emotion do a key word search for local businesses
