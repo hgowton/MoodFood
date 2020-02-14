@@ -2,15 +2,68 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
+<title>Project-1</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <!-- Only way Helen's CSS styling sheet would work -- let me know what has to be changed. -->
+    <link rel="stylesheet" href="./assets/style.css" media="screen">
+    
+     <!-- Bootstrap code -->
+     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f0b2e95a6d.js" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts -->
+ 
+    <!-- JQuery and JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./assets/javascript/app.js"></script>
+=======
     <title>Mood Food</title>
 
     <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- image upload box goes here-->
+    <!-- Edamam API-->
+    <script src="https://developer.edamam.com/attribution/badge.js"></script>
+    
+    </head>
+  <body>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <h3>Upload Your Image Here:</h3>
 
-    </header>
-    <body>
+          <input type='file' />
+          <br><img id="myImg" src="#" alt="your image" width="50%">
+          <!-- <div id="edamam-badge" data-color="white"></div> -->
+        </div>
+        <div class="col-md-8">
+          <form>
+          Mood:<br>
+          <input type="text" name="userMood"><br>
+          Age:<br>
+          <input type="text" name="age" class="userAge">
+          </form>
+          <input type="button" value="Recipe">
+          <input type="button" value="Restaurant">
+          <input type="button" value="Cocktail">
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <h3>Suggestions:</h3>
+      </div>
+    </div>
+  
+=======
+ 
       <h3>Upload Your Image Here:</h3>
       <form>
         Mood:<br>
@@ -24,7 +77,3 @@
       <input type="button" value="Cocktail">
 
       <h3>Suggestions:</h3>
-
-
-    </body>
-</html>
