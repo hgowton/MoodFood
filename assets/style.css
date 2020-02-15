@@ -2,13 +2,6 @@ body {
     background: url("./images/food.png");
 }
 
-.titleArea {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    text-align: center;
-    background-color: lightskyblue;
-    border-style: groove;
-    color: whitesmoke
-}
 
 .rrcBtn {
     color: white;
