@@ -2,47 +2,44 @@ body {
     background: url("./images/food.png");
 }
 
-
-.container {
+.titleArea {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-
-}
-
-/* "What's my mood" input box  */
-input[id=submitUserImage] {
-    color: white;
-    background-color: lightskyblue;
-    font-size: 20px;
-}
-
-/* Emoticon box -- JS */
-.emotionBtn {
-    width: 5%;
-}
-
-.col-md-8 {
-    font-size: 25px;
-}
-
-
-input[type=text] {
-    color: black;
-    font-size: 25px;
-    font-weight: bold;
-    border: none;
-
-}
-
-input[type=button] {
-    background-color: lightskyblue;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: white;
-    font-size: 20px;
-}
-
-.col-md-12 {
     background-color: lightskyblue;
     border-style: groove;
     color: whitesmoke
 }
+
+.rrcBtn {
+    color: white;
+    background-color: lightskyblue;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Emoticon box -- JS */
+.emotionBtn {
+    width: 20%;
+    margin-bottom: 8px;
+}
+
+.inputField {
+    background-color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+}
+
+#inputForm {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.rrcBtn:hover {
+background-color: pink;
+color: black;
+}
+  

@@ -1,6 +1,25 @@
 $(document).ready(function() {
   
-  $("#submitUserImage").on("click", function(event) {
+  //Yelp API
+  var term = "cocktail";
+  var place = "19335"; //input box zip code box
+  //location -- distance
+  var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+  var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+  
+  $.ajax({
+    url: corsAnywhereUrl + queryURL,
+    method: "GET",
+    headers: {
+      "Authorization" : "Bearer " + apiKey
+    }
+  }).then(function(response) {
+    console.log(response);
+  }); 
+  
+  //User selects Recipe Button to display recipes based on Mood
+  $("#submitUserInfo").on("click", function(event) {
     event.preventDefault();
     var userImageURL = $("#userImage").val().trim();
     console.log(userImageURL);
@@ -9,10 +28,9 @@ $(document).ready(function() {
     //need to output emotion
     //request parameter of file upload image_file
     //switched out exampleURL for userImageURL 
-    var userImageURL = $("#userImage").val().trim();
+    // var userImageURL = $("#userImage").val().trim();
     var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect?";
     var apiKeyFace = "api_key=Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3&api_secret=-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
-    var exampleURL = "https://imgix.bustle.com/uploads/getty/2019/12/4/eada5bb4-e0a9-4b91-bbf5-814b50a402ff-getty-1180475233.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70"
     var returnAtt = "&return_attributes=emotion"
     var queryFaceURL = faceURL + apiKeyFace + "&image_url=" + userImageURL + returnAtt 
     $.ajax({
@@ -72,7 +90,7 @@ $(document).ready(function() {
         //create an image for anger if the disgust value from the image is greater than 60
         var disgustBtn = $("<img id='disgustBtn'>");
         disgustBtn.addClass("emotionBtn");
-        disgustBtn.attr("src", "../images/em_disgust.png")
+        disgustBtn.attr("src", "./assets/images/em_disgust.png")
         disgustBtn.attr("alt", "disgust emoticon")
         
         //appends disgust btn to Mood div
@@ -94,7 +112,7 @@ $(document).ready(function() {
         //create an image for sadness if the disgust value from the image is greater than 60
         var sadnessBtn = $("<img id='sadnessBtn'>");
         sadnessBtn.addClass("emotionBtn");
-        sadnessBtn.attr("src", "../images/em_disgust.png")
+        sadnessBtn.attr("src", "./assets/images/em_sadness.png")
         sadnessBtn.attr("alt", "sadness emoticon")
         
         //appends sadness btn to Mood div
@@ -123,89 +141,34 @@ $(document).ready(function() {
         $("#emotionsIcons").prepend(neutralBtn) 
       }
       
-      
       //clear url input box
       $("#userImage").val("");    
     })  
   })
   
-  
-  $("#restaurantbtn").on("click", function(){
-
-  //based on emotion do a key word search for local businesses??
-  var age = $(".userAge").val().trim();
-
-  //Yelp API
-  var term = "cocktail";
-  var place = $(".userzip-code").val().trim(); 
-  console.log("zip code: ", place)
-  var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
-  var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
-  
-  $.ajax({
-    url: corsAnywhereUrl + queryURL,
-    method: "GET",
-    headers: {
-      "Authorization" : "Bearer " + apiKey
+  //User selects Recipe Button to display recipes based on Mood
+  //Second spoonacular API call, needed to display information for each recipe
+  $("#recipebtn").on("click", function(){
+    function recipeCall (recipeNumber) {
+      var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
+      var recipeBasics = "https://api.spoonacular.com/recipes/"
+      var recipeInfo = "/information?includeNutrition=false"
+      var recipeURL = recipeBasics + recipeNumber + recipeInfo + spoonAPI
+      console.log(recipeURL)
+      $.ajax({
+        url: recipeURL,
+        method: "GET"
+      }).then(function(response) {
+        console.log(response)
+        return response
+      })
     }
-  }).then(function(response) {
-    console.log("this is response", response);
     
-    for (var i=0; i<5; i++){
-      
-      var restaurantDiv = $("<div class='col s3'>");
-
-      var restaurantNameGrab = response.businesses[i].name;
-      var restaurantName =$("<h5>").text(restaurantNameGrab);
-      restaurantName.addClass("restaurantName");
-      restaurantDiv.append(restaurantName)
-      
-      var picGrab = response.businesses[i].image_url;
-      var pic = $("<img>").attr("src", picGrab);
-      pic.addClass("picture")
-      pic.attr("alt","restaurant image")
-      restaurantDiv.append(pic);
-      
-      var restaurantInfo = $("<div class='col s9'>");
-      
-      var starRatingGrab = response.businesses[i].rating;
-      var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
-      starRating.addClass("rating")
-      restaurantInfo.append(starRating);
-      
-      var priceGrab = response.businesses[i].price;
-      var price = $("<p>").text("Price: " + priceGrab);
-      price.addClass("price")
-      restaurantInfo.append(price);
-      
-      var addressGrabAddress = response.businesses[i].location.display_address[0];
-      var addressGrabCity = response.businesses[i].location.display_address[1];
-      var address = $("<p>").text("Address: " + addressGrabAddress + " " 
-      + addressGrabCity);
-      address.addClass("address")
-      restaurantInfo.append(address);
-      
-      var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
-      $("#table").append(row);
-      
-      
-      // var cocktailGrab = response.businesses[i].alcohol;
-      // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
-      
-    }
-  });
-}); 
-
-$("#recipebtn").on("click", function(){
-  //based on emotion do a key word search for recipe??
-
-
-  
-  //spoonacular - for API food and postman &number=2
+    
+    //First AJAX call for spoonacular API, necessary to gain recipe ID numbers for second API call
     var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
     var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
-    var spoonCuisine = "indian" //emotion input???
+    var spoonCuisine = "indian"
     var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
     console.log(querySpoonURL)
     $.ajax({
@@ -214,58 +177,127 @@ $("#recipebtn").on("click", function(){
     }).then(function(response) {
       console.log(response)
       console.log("id number" + response.results[3].id)
-      // recipeCall(response.results[3].id);
-      // recipeCall(response.results[2].id);
-      // recipeCall(response.results[1].id);
-   
-      
-      
-
+      recipeCall(response.results[3].id);
+      recipeCall(response.results[2].id);
+      recipeCall(response.results[1].id);
       
       for (var i=0; i<5; i++){
-        
         var recipeDiv = $("<div class='col s3'>");
         
         var recipeNameGrab = response.results[i].title;
-        var recipeName =$("<h5>").text(recipeNameGrab);
+        var recipeName = $("<h5>").text(recipeNameGrab);
         recipeName.addClass("recipeName");
         recipeDiv.append(recipeName)
         console.log("recipe name: ", recipeNameGrab)
+    
+        var row = $("<div class='row'>").append(recipeDiv); //+ recipeInfo at some point
+        $("#table").append(row);
+      }
+    })
+  })
+  
+  
+  
+  //User selects Cocktail Button to display Cocktail selections based on Mood
+  $("#restaurantBtn").on("click", function(){
+    event.preventDefault();
+    var place = $("#userzip-code").val().trim();
+    var age = $("#userAge").val().trim();
+    console.log("location" + place)
+    console.log("userage" + age)
 
-      //doesn't like the image url for now
-        // var picGrab = response.results[i].imageUrls[0];
-        // var pic = $("<img>").attr("src", picGrab);
-        // pic.addClass("picture")
-        // pic.attr("alt","recipe image")
-        // recipeDiv.append(pic);
+    //based on emotion do a key word search for local businesses??
+
+    //Yelp API
+    var term = "cocktail";
+    console.log("zip code: ", place)
+    var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+    
+    $.ajax({
+      url: corsAnywhereUrl + queryURL,
+      method: "GET",
+      headers: {
+        "Authorization" : "Bearer " + apiKey
+      }
+    }).then(function(response) {
+      console.log("this is response", response);
+      
+      for (var i=0; i<5; i++){
         
-      // var recipeInfo = $("<div class='col s9'>");
-      
-      // var starRatingGrab = response.results[i].rating;
-      // var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
-      // starRating.addClass("rating")
-      // restaurantInfo.append(starRating);
-      
-      // var priceGrab = response.results[i].price;
-      // var price = $("<p>").text("Price: " + priceGrab);
-      // price.addClass("price")
-      // recipeInfo.append(price);
-      
-      // var addressGrabAddress = response.results[i].location.display_address[0];
-      // var addressGrabCity = response.results[i].location.display_address[1];
-      // var address = $("<p>").text("Address: " + addressGrabAddress + " " 
-      // + addressGrabCity);
-      // address.addClass("address")
-      // recipeInfo.append(address);
-      
-      var row = $("<div class='row'>").append(recipeDiv); //+ recipeInfo at some point
-      $("#table").append(row);
-      
-      
-    }
-  });
-  });
+        var restaurantDiv = $("<div class='col s3'>");
+
+        var restaurantNameGrab = response.businesses[i].name;
+        var restaurantName =$("<h5>").text(restaurantNameGrab);
+        restaurantName.addClass("restaurantName");
+        restaurantDiv.append(restaurantName)
+        
+        var picGrab = response.businesses[i].image_url;
+        var pic = $("<img>").attr("src", picGrab);
+        pic.addClass("picture")
+        pic.addClass("responsive-img");
+        pic.attr("alt","restaurant image")
+        restaurantDiv.append(pic);
+        
+        var restaurantInfo = $("<div class='col s9'>");
+        
+        var starRatingGrab = response.businesses[i].rating;
+        var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
+        starRating.addClass("rating")
+        restaurantInfo.append(starRating);
+        
+        var priceGrab = response.businesses[i].price;
+        var price = $("<p>").text("Price: " + priceGrab);
+        price.addClass("price")
+        restaurantInfo.append(price);
+        
+        var addressGrabAddress = response.businesses[i].location.display_address[0];
+        var addressGrabCity = response.businesses[i].location.display_address[1];
+        var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+        + addressGrabCity);
+        address.addClass("address")
+        restaurantInfo.append(address);
+        
+        var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
+        $("#table").append(row);
+
+        
+        
+        // var cocktailGrab = response.businesses[i].alcohol;
+        // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
+        
+      }
+    });
+  }); 
+
 }); 
+
+//doesn't like the image url for now
+  // var picGrab = response.results[i].imageUrls[0];
+  // var pic = $("<img>").attr("src", picGrab);
+  // pic.addClass("picture")
+  // pic.attr("alt","recipe image")
+  // recipeDiv.append(pic);
+  
+// var recipeInfo = $("<div class='col s9'>");
+
+// var starRatingGrab = response.results[i].rating;
+// var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
+// starRating.addClass("rating")
+// restaurantInfo.append(starRating);
+
+// var priceGrab = response.results[i].price;
+// var price = $("<p>").text("Price: " + priceGrab);
+// price.addClass("price")
+// recipeInfo.append(price);
+
+// var addressGrabAddress = response.results[i].location.display_address[0];
+// var addressGrabCity = response.results[i].location.display_address[1];
+// var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+// + addressGrabCity);
+// address.addClass("address")
+// recipeInfo.append(address);
 
 
 
