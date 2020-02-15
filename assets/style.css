@@ -42,4 +42,8 @@ body {
 background-color: pink;
 color: black;
 }
+
+.displayNone {
+    display: none;
+}
   
