@@ -83,6 +83,7 @@ $(document).ready(function() {
         happinessBtn.addClass("emotionBtn");
         happinessBtn.attr("src", "./assets/images/em_happy.png")
         happinessBtn.attr("alt", "happy emoticon")
+        console.log("test")
         
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
@@ -142,6 +143,9 @@ $(document).ready(function() {
         //appends neutral btn to Mood div
         $("#emotionsIcons").prepend(neutralBtn) 
       }
+      
+      var emotion = $("#emotionsIcon")
+      console.log("emotion", emotion)
       
       //clear url input box
       $("#userImage").val("");
