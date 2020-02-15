@@ -83,6 +83,7 @@ $(document).ready(function() {
         happinessBtn.addClass("emotionBtn");
         happinessBtn.attr("src", "./assets/images/em_happy.png")
         happinessBtn.attr("alt", "happy emoticon")
+        console.log("test")
         
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
@@ -142,6 +143,9 @@ $(document).ready(function() {
         //appends neutral btn to Mood div
         $("#emotionsIcons").prepend(neutralBtn) 
       }
+      
+      var emotion = $("#emotionsIcon")
+      console.log("emotion", emotion)
       
       //clear url input box
       $("#userImage").val("");
@@ -219,15 +223,20 @@ $(document).ready(function() {
     }).then(function(response) {
       console.log(response)
       console.log("id number" + response.results[3].id)
-      recipeCall(response.results[3].id);
-      recipeCall(response.results[2].id);
-      recipeCall(response.results[1].id);
-      recipeCall(response.results[4].id);
+      var N = Math.floor(Math.random()*19);
+      var A = Math.floor(Math.random()*19);
+      var B = Math.floor(Math.random()*19);
+      var C = Math.floor(Math.random()*19);
+      recipeCall(response.results[N].id);
+      recipeCall(response.results[A].id);
+      recipeCall(response.results[B].id);
+      recipeCall(response.results[C].id);
     })
   })
   
   function rrCall (response){
-    for (var i=0; i<5; i++){
+    var N = Math.floor(Math.random()*16);
+    for (var i=N; i< N+3; i++){
         var restaurantDiv = $("<div class='col s3'>");
         
         var restaurantNameGrab = response.businesses[i].name;
