@@ -236,6 +236,7 @@ $(document).ready(function() {
         var picGrab = response.businesses[i].image_url;
         var pic = $("<img>").attr("src", picGrab);
         pic.addClass("picture")
+        pic.addClass("responsive-img");
         pic.attr("alt","restaurant image")
         restaurantDiv.append(pic);
         
