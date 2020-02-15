@@ -46,4 +46,9 @@ color: black;
 .displayNone {
     display: none;
 }
+
+#recipeImg {
+    width: 20%;
+    margin-bottom: 8px;
+}
   
