@@ -22,8 +22,10 @@ $(document).ready(function() {
   $("#submitUserInfo").on("click", function(event) {
     event.preventDefault();
     var userImageURL = $("#userImage").val().trim();
-    console.log(userImageURL);
-  
+    var place = $("#userzip-code").val().trim();
+    var age = $("#userAge").val().trim();
+    console.log("location: " + place)
+    console.log("userage: " + age)
     
     //need to output emotion
     //request parameter of file upload image_file
@@ -142,7 +144,12 @@ $(document).ready(function() {
       }
       
       //clear url input box
-      $("#userImage").val("");    
+      $("#userImage").val("");
+      $("#emot_rrcArea").removeClass("displayNone");  
+      if (age > 20) {
+        $("#cocktailBtn").removeClass("displayNone");
+      }  
+
     })  
   })
   
@@ -160,6 +167,36 @@ $(document).ready(function() {
         method: "GET"
       }).then(function(response) {
         console.log(response)
+
+        var recipeDiv = $("<div class='col s3'>");
+        
+        var recipeNameGrab = response.title;
+        var recipeName = $("<h5>").text(recipeNameGrab);
+        recipeName.addClass("recipeName");
+        recipeDiv.append(recipeName)
+        console.log("recipe name: ", recipeNameGrab)      
+    
+        var picGrab = response.image;
+        var pic = $("<img>").attr("src", picGrab);
+        pic.addClass("picture")
+        pic.addClass("responsive-img");
+        pic.attr("alt", response.title)
+        recipeDiv.append(pic);
+        console.log("recipe image URL: " + picGrab)
+
+        var recipeInfo = $("<div class='col s9'>");
+
+        var dietType0 = response.diets[0];
+        var dietType1 = response.diets[1];
+        console.log(dietType1)
+        var specialDiets = $("<p>").text("Diet Types: " + dietType0 + ", " + dietType1);
+        specialDiets.addClass("diets")
+        recipeInfo.append(specialDiets);
+
+
+        var row = $("<div class='row'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
+        $("#table").prepend(row);
+
         return response
       })
     }
@@ -180,36 +217,54 @@ $(document).ready(function() {
       recipeCall(response.results[3].id);
       recipeCall(response.results[2].id);
       recipeCall(response.results[1].id);
-      
-      for (var i=0; i<5; i++){
-        var recipeDiv = $("<div class='col s3'>");
-        
-        var recipeNameGrab = response.results[i].title;
-        var recipeName = $("<h5>").text(recipeNameGrab);
-        recipeName.addClass("recipeName");
-        recipeDiv.append(recipeName)
-        console.log("recipe name: ", recipeNameGrab)
-    
-        var row = $("<div class='row'>").append(recipeDiv); //+ recipeInfo at some point
-        $("#table").append(row);
-      }
     })
   })
   
-  
-  
-  //User selects Cocktail Button to display Cocktail selections based on Mood
+  function rrCall (){
+    var restaurantDiv = $("<div class='col s3'>");
+
+    var restaurantNameGrab = response.businesses[i].name;
+    var restaurantName =$("<h5>").text(restaurantNameGrab);
+    restaurantName.addClass("restaurantName");
+    restaurantDiv.append(restaurantName)
+    
+    var picGrab = response.businesses[i].image_url;
+    var pic = $("<img>").attr("src", picGrab);
+    pic.addClass("picture")
+    pic.addClass("responsive-img");
+    pic.attr("alt","restaurant image")
+    restaurantDiv.append(pic);
+    
+    var restaurantInfo = $("<div class='col s9'>");
+    
+    var starRatingGrab = response.businesses[i].rating;
+    var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
+    starRating.addClass("rating")
+    restaurantInfo.append(starRating);
+    
+    var priceGrab = response.businesses[i].price;
+    var price = $("<p>").text("Price: " + priceGrab);
+    price.addClass("price")
+    restaurantInfo.append(price);
+    
+    var addressGrabAddress = response.businesses[i].location.display_address[0];
+    var addressGrabCity = response.businesses[i].location.display_address[1];
+    var address = $("<p>").text("Address: " + addressGrabAddress + " " 
+    + addressGrabCity);
+    address.addClass("address")
+    restaurantInfo.append(address);
+    
+    var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
+    $("#table").prepend(row);
+  } 
+
+  //User selects Restaurant Button to display Restaurant selections based on Mood
   $("#restaurantBtn").on("click", function(){
-    event.preventDefault();
-    var place = $("#userzip-code").val().trim();
-    var age = $("#userAge").val().trim();
-    console.log("location" + place)
-    console.log("userage" + age)
 
     //based on emotion do a key word search for local businesses??
 
     //Yelp API
-    var term = "cocktail";
+    var term = "italian";
     console.log("zip code: ", place)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
     var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
@@ -260,7 +315,7 @@ $(document).ready(function() {
         restaurantInfo.append(address);
         
         var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
-        $("#table").append(row);
+        $("#table").prepend(row);
 
         
         
@@ -271,33 +326,33 @@ $(document).ready(function() {
     });
   }); 
 
+  //User selects Coctail Button to display Cocktail selections based on Mood
+  $("#cocktailBtn").on("click", function(){
+
+    //based on emotion do a key word search for local businesses??
+
+    //Yelp API
+    var term = "cocktail";
+    console.log("zip code: ", place)
+    var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+    
+    $.ajax({
+      url: corsAnywhereUrl + queryURL,
+      method: "GET",
+      headers: {
+        "Authorization" : "Bearer " + apiKey
+      }
+    }).then(function(response) {
+      console.log("this is response", response);
+
+      for (var i=0; i<5; i++){
+        rrCall();
+      }
+    });
+  });
 }); 
-
-//doesn't like the image url for now
-  // var picGrab = response.results[i].imageUrls[0];
-  // var pic = $("<img>").attr("src", picGrab);
-  // pic.addClass("picture")
-  // pic.attr("alt","recipe image")
-  // recipeDiv.append(pic);
-  
-// var recipeInfo = $("<div class='col s9'>");
-
-// var starRatingGrab = response.results[i].rating;
-// var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
-// starRating.addClass("rating")
-// restaurantInfo.append(starRating);
-
-// var priceGrab = response.results[i].price;
-// var price = $("<p>").text("Price: " + priceGrab);
-// price.addClass("price")
-// recipeInfo.append(price);
-
-// var addressGrabAddress = response.results[i].location.display_address[0];
-// var addressGrabCity = response.results[i].location.display_address[1];
-// var address = $("<p>").text("Address: " + addressGrabAddress + " " 
-// + addressGrabCity);
-// address.addClass("address")
-// recipeInfo.append(address);
 
 
 
