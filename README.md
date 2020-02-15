@@ -3,7 +3,7 @@
 # We use YOUR mood to help select YOUR food. 
 
 # Overview
-- Mood Food is an application that helps the user decide a food option based off their mood. Users can select whether they would like a recipe, restaurant or cocktail. (only if over 21)
+- Mood Food is an application that helps the user decide a food option based off their mood. Users can select whether they would like a recipe, restaurant or cocktail (only if over 21).
 
 # Utilizing our App
 - View the Mood Food App here: https://beverlynicolethomas.github.io/Project-1/
