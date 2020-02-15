@@ -22,8 +22,10 @@ $(document).ready(function() {
   $("#submitUserInfo").on("click", function(event) {
     event.preventDefault();
     var userImageURL = $("#userImage").val().trim();
-    console.log(userImageURL);
-  
+    var place = $("#userzip-code").val().trim();
+    var age = $("#userAge").val().trim();
+    console.log("location: " + place)
+    console.log("userage: " + age)
     
     //need to output emotion
     //request parameter of file upload image_file
@@ -142,7 +144,12 @@ $(document).ready(function() {
       }
       
       //clear url input box
-      $("#userImage").val("");    
+      $("#userImage").val("");
+      $("#emot_rrcArea").removeClass("displayNone");  
+      if (age > 20) {
+        $("#cocktailBtn").removeClass("displayNone");
+      }  
+
     })  
   })
   
@@ -200,11 +207,6 @@ $(document).ready(function() {
   
   //User selects Cocktail Button to display Cocktail selections based on Mood
   $("#restaurantBtn").on("click", function(){
-    event.preventDefault();
-    var place = $("#userzip-code").val().trim();
-    var age = $("#userAge").val().trim();
-    console.log("location" + place)
-    console.log("userage" + age)
 
     //based on emotion do a key word search for local businesses??
 
