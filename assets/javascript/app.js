@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+  var emotionFood = "";
   
   //Yelp API
   var term = "cocktail";
@@ -62,6 +64,7 @@ $(document).ready(function() {
         angerBtn.addClass("emotionBtn");
         angerBtn.attr("src", "./assets/images/em_anger.png")
         angerBtn.attr("alt", "anger emoticon")
+        emotionFood = "comfort food"
         
         //appends anger btn to Mood div
         $("#emotionsIcons").prepend(angerBtn) 
@@ -73,7 +76,7 @@ $(document).ready(function() {
         happinessBtn.addClass("emotionBtn");
         happinessBtn.attr("src", "./assets/images/em_happy.png")
         happinessBtn.attr("alt", "happy emoticon")
-        console.log("test")
+        emotionFood = "exotic"
         
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
@@ -85,6 +88,7 @@ $(document).ready(function() {
         disgustBtn.addClass("emotionBtn");
         disgustBtn.attr("src", "./assets/images/em_disgust.png")
         disgustBtn.attr("alt", "disgust emoticon")
+        emotionFood = "american"
         
         //appends disgust btn to Mood div
         $("#emotionsIcons").prepend(disgustBtn)
@@ -96,6 +100,7 @@ $(document).ready(function() {
         fearBtn.addClass("emotionBtn");
         fearBtn.attr("src", "./assets/images/em_fear.png")
         fearBtn.attr("alt", "fear emoticon")
+        emotionFood = "italian"
         
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(fearBtn)
@@ -107,6 +112,7 @@ $(document).ready(function() {
         sadnessBtn.addClass("emotionBtn");
         sadnessBtn.attr("src", "./assets/images/em_sadness.png")
         sadnessBtn.attr("alt", "sadness emoticon")
+        emotionFood = "comfort food"
         
         //appends sadness btn to Mood div
         $("#emotionsIcons").prepend(sadnessBtn)
@@ -118,6 +124,7 @@ $(document).ready(function() {
         surpriseBtn.addClass("emotionBtn");
         surpriseBtn.attr("src", "./assets/images/em_surprise.png")
         surpriseBtn.attr("alt", "surprise emoticon")
+        emotionFood = "chinese"
         
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(surpriseBtn)
@@ -129,6 +136,7 @@ $(document).ready(function() {
         neutralBtn.addClass("emotionBtn");
         neutralBtn.attr("src", "./assets/images/em_neutral.png")
         neutralBtn.attr("alt", "neutral emoticon")
+        emotionFood = "spicy"
         
         //appends neutral btn to Mood div
         $("#emotionsIcons").prepend(neutralBtn) 
@@ -136,6 +144,7 @@ $(document).ready(function() {
       
       var emotion = $("#emotionsIcon")
       console.log("emotion", emotion)
+      console.log("emotion food:" + emotionFood);
       
       //clear url input box
       $("#userImage").val("");
@@ -278,10 +287,12 @@ $(document).ready(function() {
   //User selects Restaurant Button to display Restaurant selections based on Mood
   $("#restaurantBtn").on("click", function(){
     //Yelp API
-    var term = "italian";
+    var searchEmotion = emotionFood;
+    var term = "restaurant"
     console.log("zip code: ", place)
+    console.log("emotion of food: " + emotionFood)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
     
     $.ajax({
@@ -300,9 +311,10 @@ $(document).ready(function() {
   $("#cocktailBtn").on("click", function(){
     //Yelp API
     var term = "cocktail";
+    var searchEmotion = emotionFood;
     console.log("zip code: ", place)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
     
     $.ajax({
