@@ -2,11 +2,15 @@ body {
     background: url("./images/food.png");
 }
 
-
 .container {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
+}
 
+.col-md-12 {
+    background-color: ;
+    border-style: groove;
+    color: whitesmoke
 }
 
 /* "What's my mood" input box  */
@@ -31,7 +35,6 @@ input[type=text] {
     font-size: 25px;
     font-weight: bold;
     border: none;
-
 }
 
 input[type=button] {
@@ -39,10 +42,4 @@ input[type=button] {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     font-size: 20px;
-}
-
-.col-md-12 {
-    background-color: lightskyblue;
-    border-style: groove;
-    color: whitesmoke
 }
