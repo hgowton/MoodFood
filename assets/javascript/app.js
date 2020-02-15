@@ -153,7 +153,6 @@ $(document).ready(function() {
       if (age > 20) {
         $("#cocktailBtn").removeClass("displayNone");
       }  
-
     })  
   })
   
@@ -189,6 +188,12 @@ $(document).ready(function() {
         console.log("recipe image URL: " + picGrab)
 
         var recipeInfo = $("<div class='col s9'>");
+        var recipeSpoonURL = response.sourceUrl
+        console.log("recipe URL: " + recipeSpoonURL)
+
+        var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("recipeLink");
+        $(".recipeLink").append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
+        recipeInfo.append(cookBook);
 
         var dietType0 = response.diets[0];
         var dietType1 = response.diets[1];
@@ -196,8 +201,8 @@ $(document).ready(function() {
         var specialDiets = $("<p>").text("Diet Types: " + dietType0 + ", " + dietType1);
         specialDiets.addClass("diets")
         recipeInfo.append(specialDiets);
-
-
+       
+       
         var row = $("<div class='row'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
         $("#table").prepend(row);
 
@@ -221,72 +226,14 @@ $(document).ready(function() {
       recipeCall(response.results[3].id);
       recipeCall(response.results[2].id);
       recipeCall(response.results[1].id);
+      recipeCall(response.results[4].id);
     })
   })
   
-  function rrCall (){
-    var restaurantDiv = $("<div class='col s3'>");
-
-    var restaurantNameGrab = response.businesses[i].name;
-    var restaurantName =$("<h5>").text(restaurantNameGrab);
-    restaurantName.addClass("restaurantName");
-    restaurantDiv.append(restaurantName)
-    
-    var picGrab = response.businesses[i].image_url;
-    var pic = $("<img>").attr("src", picGrab);
-    pic.addClass("picture")
-    pic.addClass("responsive-img");
-    pic.attr("alt","restaurant image")
-    restaurantDiv.append(pic);
-    
-    var restaurantInfo = $("<div class='col s9'>");
-    
-    var starRatingGrab = response.businesses[i].rating;
-    var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
-    starRating.addClass("rating")
-    restaurantInfo.append(starRating);
-    
-    var priceGrab = response.businesses[i].price;
-    var price = $("<p>").text("Price: " + priceGrab);
-    price.addClass("price")
-    restaurantInfo.append(price);
-    
-    var addressGrabAddress = response.businesses[i].location.display_address[0];
-    var addressGrabCity = response.businesses[i].location.display_address[1];
-    var address = $("<p>").text("Address: " + addressGrabAddress + " " 
-    + addressGrabCity);
-    address.addClass("address")
-    restaurantInfo.append(address);
-    
-    var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
-    $("#table").prepend(row);
-  } 
-
-  //User selects Restaurant Button to display Restaurant selections based on Mood
-  $("#restaurantBtn").on("click", function(){
-
-    //based on emotion do a key word search for local businesses??
-
-    //Yelp API
-    var term = "italian";
-    console.log("zip code: ", place)
-    var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
-    var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
-    
-    $.ajax({
-      url: corsAnywhereUrl + queryURL,
-      method: "GET",
-      headers: {
-        "Authorization" : "Bearer " + apiKey
-      }
-    }).then(function(response) {
-      console.log("this is response", response);
-      
-      for (var i=0; i<5; i++){
-        
+  function rrCall (response){
+    for (var i=0; i<5; i++){
         var restaurantDiv = $("<div class='col s3'>");
-
+        
         var restaurantNameGrab = response.businesses[i].name;
         var restaurantName =$("<h5>").text(restaurantNameGrab);
         restaurantName.addClass("restaurantName");
@@ -320,21 +267,32 @@ $(document).ready(function() {
         
         var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
         $("#table").prepend(row);
-
-        
-        
-        // var cocktailGrab = response.businesses[i].alcohol;
-        // var cocktail = $("<p>").text("Wanna spice it up? ", cocktailGrab);
-        
       }
+    } 
+
+  //User selects Restaurant Button to display Restaurant selections based on Mood
+  $("#restaurantBtn").on("click", function(){
+    //Yelp API
+    var term = "italian";
+    console.log("zip code: ", place)
+    var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+    
+    $.ajax({
+      url: corsAnywhereUrl + queryURL,
+      method: "GET",
+      headers: {
+        "Authorization" : "Bearer " + apiKey
+      }
+    }).then(function(response) {
+      console.log("this is response", response);
+      rrCall(response);
     });
   }); 
 
   //User selects Coctail Button to display Cocktail selections based on Mood
   $("#cocktailBtn").on("click", function(){
-
-    //based on emotion do a key word search for local businesses??
-
     //Yelp API
     var term = "cocktail";
     console.log("zip code: ", place)
@@ -350,10 +308,7 @@ $(document).ready(function() {
       }
     }).then(function(response) {
       console.log("this is response", response);
-
-      for (var i=0; i<5; i++){
-        rrCall();
-      }
+      rrCall(response);
     });
   });
 }); 
