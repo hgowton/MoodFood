@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+  var emotionFood = "";
   
   //Yelp API
   var term = "cocktail";
@@ -7,16 +9,6 @@ $(document).ready(function() {
   var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
   var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
-  
-  $.ajax({
-    url: corsAnywhereUrl + queryURL,
-    method: "GET",
-    headers: {
-      "Authorization" : "Bearer " + apiKey
-    }
-  }).then(function(response) {
-    console.log(response);
-  }); 
   
   //User selects Recipe Button to display recipes based on Mood
   $("#submitUserInfo").on("click", function(event) {
@@ -72,29 +64,31 @@ $(document).ready(function() {
         angerBtn.addClass("emotionBtn");
         angerBtn.attr("src", "./assets/images/em_anger.png")
         angerBtn.attr("alt", "anger emoticon")
+        emotionFood = "comfort food"
         
         //appends anger btn to Mood div
         $("#emotionsIcons").prepend(angerBtn) 
       }
       
       if (happiness > 60){
-        //create an image for happiness if the anger value from the image is greater than 60
+        //create an image for happiness if the happiness value from the image is greater than 60
         var happinessBtn = $("<img id='happinessBtn'>");
         happinessBtn.addClass("emotionBtn");
         happinessBtn.attr("src", "./assets/images/em_happy.png")
         happinessBtn.attr("alt", "happy emoticon")
-        console.log("test")
+        emotionFood = "exotic"
         
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
       }
       
       if (disgust > 60){
-        //create an image for anger if the disgust value from the image is greater than 60
+        //create an image for disgust if the disgust value from the image is greater than 60
         var disgustBtn = $("<img id='disgustBtn'>");
         disgustBtn.addClass("emotionBtn");
         disgustBtn.attr("src", "./assets/images/em_disgust.png")
         disgustBtn.attr("alt", "disgust emoticon")
+        emotionFood = "american"
         
         //appends disgust btn to Mood div
         $("#emotionsIcons").prepend(disgustBtn)
@@ -106,6 +100,7 @@ $(document).ready(function() {
         fearBtn.addClass("emotionBtn");
         fearBtn.attr("src", "./assets/images/em_fear.png")
         fearBtn.attr("alt", "fear emoticon")
+        emotionFood = "italian"
         
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(fearBtn)
@@ -117,6 +112,7 @@ $(document).ready(function() {
         sadnessBtn.addClass("emotionBtn");
         sadnessBtn.attr("src", "./assets/images/em_sadness.png")
         sadnessBtn.attr("alt", "sadness emoticon")
+        emotionFood = "comfort food"
         
         //appends sadness btn to Mood div
         $("#emotionsIcons").prepend(sadnessBtn)
@@ -128,17 +124,19 @@ $(document).ready(function() {
         surpriseBtn.addClass("emotionBtn");
         surpriseBtn.attr("src", "./assets/images/em_surprise.png")
         surpriseBtn.attr("alt", "surprise emoticon")
+        emotionFood = "chinese"
         
         //appends fear btn to Mood div
         $("#emotionsIcons").prepend(surpriseBtn)
       }
       
       if (neutral > 60){
-        //create an image for neutral if the anger value from the image is greater than 60
+        //create an image for neutral if the neutral value from the image is greater than 60
         var neutralBtn = $("<img id='neutralBtn'>");
         neutralBtn.addClass("emotionBtn");
         neutralBtn.attr("src", "./assets/images/em_neutral.png")
         neutralBtn.attr("alt", "neutral emoticon")
+        emotionFood = "spicy"
         
         //appends neutral btn to Mood div
         $("#emotionsIcons").prepend(neutralBtn) 
@@ -146,6 +144,7 @@ $(document).ready(function() {
       
       var emotion = $("#emotionsIcon")
       console.log("emotion", emotion)
+      console.log("emotion food:" + emotionFood);
       
       //clear url input box
       $("#userImage").val("");
@@ -156,61 +155,61 @@ $(document).ready(function() {
     })  
   })
   
+  function recipeCall (recipeNumber) {
+    var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
+    var recipeBasics = "https://api.spoonacular.com/recipes/"
+    var recipeInfo = "/information?includeNutrition=false"
+    var recipeURL = recipeBasics + recipeNumber + recipeInfo + spoonAPI
+    console.log(recipeURL)
+    $.ajax({
+      url: recipeURL,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response)
+
+      var recipeDiv = $("<div class='col s3'>");
+      
+      var recipeNameGrab = response.title;
+      var recipeName = $("<h5>").text(recipeNameGrab);
+      recipeName.addClass("recipeName");
+      recipeDiv.append(recipeName)
+      console.log("recipe name: ", recipeNameGrab)      
+  
+      var picGrab = response.image;
+      var pic = $("<img>").attr("src", picGrab);
+      pic.addClass("picture")
+      pic.addClass("responsive-img");
+      pic.attr("alt", response.title)
+      recipeDiv.append(pic);
+      console.log("recipe image URL: " + picGrab)
+
+      var recipeInfo = $("<div class='col s9'>");
+      var recipeSpoonURL = response.sourceUrl
+      console.log("recipe URL: " + recipeSpoonURL)
+
+      var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("linkBtn");
+      cookBook.append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
+      recipeInfo.append(cookBook);
+
+      var dietType0 = response.diets[0];
+      var dietType1 = response.diets[1];
+      console.log(dietType1)
+      var specialDiets = $("<p>").text("Diet Types: " + dietType0 + ", " + dietType1);
+      specialDiets.addClass("diets")
+      recipeInfo.append(specialDiets);
+     
+     
+      var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
+      $("#table").prepend(row);
+
+      return response
+    })
+  }
+  
   //User selects Recipe Button to display recipes based on Mood
   //Second spoonacular API call, needed to display information for each recipe
   $("#recipebtn").on("click", function(){
-    function recipeCall (recipeNumber) {
-      var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
-      var recipeBasics = "https://api.spoonacular.com/recipes/"
-      var recipeInfo = "/information?includeNutrition=false"
-      var recipeURL = recipeBasics + recipeNumber + recipeInfo + spoonAPI
-      console.log(recipeURL)
-      $.ajax({
-        url: recipeURL,
-        method: "GET"
-      }).then(function(response) {
-        console.log(response)
-
-        var recipeDiv = $("<div class='col s3'>");
-        
-        var recipeNameGrab = response.title;
-        var recipeName = $("<h5>").text(recipeNameGrab);
-        recipeName.addClass("recipeName");
-        recipeDiv.append(recipeName)
-        console.log("recipe name: ", recipeNameGrab)      
-    
-        var picGrab = response.image;
-        var pic = $("<img>").attr("src", picGrab);
-        pic.addClass("picture")
-        pic.addClass("responsive-img");
-        pic.attr("alt", response.title)
-        recipeDiv.append(pic);
-        console.log("recipe image URL: " + picGrab)
-
-        var recipeInfo = $("<div class='col s9'>");
-        var recipeSpoonURL = response.sourceUrl
-        console.log("recipe URL: " + recipeSpoonURL)
-
-        var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("recipeLink");
-        $(".recipeLink").append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
-        recipeInfo.append(cookBook);
-
-        var dietType0 = response.diets[0];
-        var dietType1 = response.diets[1];
-        console.log(dietType1)
-        var specialDiets = $("<p>").text("Diet Types: " + dietType0 + ", " + dietType1);
-        specialDiets.addClass("diets")
-        recipeInfo.append(specialDiets);
-       
-       
-        var row = $("<div class='row'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
-        $("#table").prepend(row);
-
-        return response
-      })
-    }
-    
-    
+    //IF does not work move line 158 through 207 into here
     //First AJAX call for spoonacular API, necessary to gain recipe ID numbers for second API call
     var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
     var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
@@ -222,12 +221,9 @@ $(document).ready(function() {
       method: "GET"
     }).then(function(response) {
       console.log(response)
-      console.log("id number" + response.results[3].id)
-      var N = Math.floor(Math.random()*19);
       var A = Math.floor(Math.random()*19);
       var B = Math.floor(Math.random()*19);
       var C = Math.floor(Math.random()*19);
-      recipeCall(response.results[N].id);
       recipeCall(response.results[A].id);
       recipeCall(response.results[B].id);
       recipeCall(response.results[C].id);
@@ -238,13 +234,14 @@ $(document).ready(function() {
     var N = Math.floor(Math.random()*16);
     for (var i=N; i< N+3; i++){
         var restaurantDiv = $("<div class='col s3'>");
+        restCall = response.businesses[i]
         
-        var restaurantNameGrab = response.businesses[i].name;
+        var restaurantNameGrab = restCall.name;
         var restaurantName =$("<h5>").text(restaurantNameGrab);
         restaurantName.addClass("restaurantName");
         restaurantDiv.append(restaurantName)
         
-        var picGrab = response.businesses[i].image_url;
+        var picGrab = restCall.image_url;
         var pic = $("<img>").attr("src", picGrab);
         pic.addClass("picture")
         pic.addClass("responsive-img");
@@ -252,25 +249,37 @@ $(document).ready(function() {
         restaurantDiv.append(pic);
         
         var restaurantInfo = $("<div class='col s9'>");
+
+        var restURL = restCall.url
+        console.log("recipe URL: " + restURL)
+  
+        var restaurantWebsite = $("<a target='_blank'>").attr("href", restURL).addClass("linkBtn");
+        restaurantWebsite.append("<img src='./assets/images/restaurant.png' id='restaurantImg' alt='restaurant website image'>")
+        restaurantInfo.append(restaurantWebsite);
         
-        var starRatingGrab = response.businesses[i].rating;
+        var starRatingGrab = restCall.rating;
         var starRating = $("<h6>").text("Rated out of 5 stars: " + starRatingGrab);
         starRating.addClass("rating")
         restaurantInfo.append(starRating);
         
-        var priceGrab = response.businesses[i].price;
+        var priceGrab = restCall.price;
         var price = $("<p>").text("Price: " + priceGrab);
         price.addClass("price")
         restaurantInfo.append(price);
         
-        var addressGrabAddress = response.businesses[i].location.display_address[0];
-        var addressGrabCity = response.businesses[i].location.display_address[1];
+        var addressGrabAddress = restCall.location.display_address[0];
+        var addressGrabCity = restCall.location.display_address[1];
         var address = $("<p>").text("Address: " + addressGrabAddress + " " 
         + addressGrabCity);
         address.addClass("address")
         restaurantInfo.append(address);
+
+        var phoneGrab = restCall.display_phone;
+        var phone = $("<p>").text("phone: " + phoneGrab);
+        phone.addClass("phone")
+        restaurantInfo.append(phone);
         
-        var row = $("<div class='row'>").append(restaurantDiv, restaurantInfo);
+        var row = $("<div class='row suggestedInfo'>").append(restaurantDiv, restaurantInfo);
         $("#table").prepend(row);
       }
     } 
@@ -278,10 +287,12 @@ $(document).ready(function() {
   //User selects Restaurant Button to display Restaurant selections based on Mood
   $("#restaurantBtn").on("click", function(){
     //Yelp API
-    var term = "italian";
+    var searchEmotion = emotionFood;
+    var term = "restaurant"
     console.log("zip code: ", place)
+    console.log("emotion of food: " + emotionFood)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
     
     $.ajax({
@@ -300,9 +311,10 @@ $(document).ready(function() {
   $("#cocktailBtn").on("click", function(){
     //Yelp API
     var term = "cocktail";
+    var searchEmotion = emotionFood;
     console.log("zip code: ", place)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
     
     $.ajax({

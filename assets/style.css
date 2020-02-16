@@ -2,19 +2,40 @@ body {
     background: url("./images/food.png");
 }
 
+header{
+    background-color: #87cefa;
+    color: white;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    text-shadow: 2px 2px 8px #649AFB;
+}
 
 .rrcBtn {
     color: white;
-    background-color: lightskyblue;
+    background-color: #87cefa;
     font-size: 20px;
     border-radius: 5px;
     padding: 5px;
 }
 
-/* Emoticon box -- JS */
+.titleArea {
+    background-color: #87cefa;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    text-shadow: 2px 2px 8px #649AFB;
+    padding: 8px;
+}
 .emotionBtn {
     width: 20%;
     margin-bottom: 8px;
+}
+
+.picture {
+    text-shadow: 2px 2px 8px #649AFB;
+    border-radius: 3px;
+    margin: 8px;
+    width: 100%;
+    box-shadow: 0px 0px 5px #3F609D;
 }
 
 .inputField {
@@ -32,7 +53,7 @@ body {
 }
   
 .rrcBtn:hover {
-background-color: pink;
+background-color: #649AFB;
 color: black;
 }
 
@@ -40,8 +61,30 @@ color: black;
     display: none;
 }
 
-#recipeImg {
-    width: 20%;
+.suggestedInfo {
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+    background-color: lightblue;
+    margin: 5px 0px 5px 0px;
+    border: 3px solid #3F609D;
+    border-style: ridge;
+    border-radius: 3px;
+}
+
+#recipeImg , #restaurantImg {
+    width: 30%;
     margin-bottom: 8px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 10px;
+}
+
+.linkBtn:hover {
+    opacity: 0.8; 
+}
+
+.rating {
+    margin-top: 65px;
 }
   
