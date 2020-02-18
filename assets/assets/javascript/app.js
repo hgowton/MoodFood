@@ -64,7 +64,7 @@ $(document).ready(function() {
         angerBtn.addClass("emotionBtn");
         angerBtn.attr("src", "./assets/images/em_anger.png")
         angerBtn.attr("alt", "anger emoticon")
-        emotionFood = "comfort food"
+        emotionFood = "salty&dessert&comfort"
         
         //appends anger btn to Mood div
         $("#emotionsIcons").prepend(angerBtn) 
@@ -76,7 +76,7 @@ $(document).ready(function() {
         happinessBtn.addClass("emotionBtn");
         happinessBtn.attr("src", "./assets/images/em_happy.png")
         happinessBtn.attr("alt", "happy emoticon")
-        emotionFood = "exotic"
+        emotionFood = "exotic&dessert"
         
         //appends happiness btn to Mood div
         $("#emotionsIcons").prepend(happinessBtn)
@@ -88,7 +88,7 @@ $(document).ready(function() {
         disgustBtn.addClass("emotionBtn");
         disgustBtn.attr("src", "./assets/images/em_disgust.png")
         disgustBtn.attr("alt", "disgust emoticon")
-        emotionFood = "american"
+        emotionFood = "american&salty"
         
         //appends disgust btn to Mood div
         $("#emotionsIcons").prepend(disgustBtn)
@@ -170,6 +170,14 @@ $(document).ready(function() {
       var recipeDiv = $("<div class='col s3'>");
       
       var recipeNameGrab = response.title;
+      var recipeInfo = $("<div class='col s9'>");
+      var recipeSpoonURL = response.sourceUrl
+      console.log("recipe URL: " + recipeSpoonURL)
+
+      var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("linkBtn");
+      cookBook.append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
+      recipeInfo.append(cookBook);
+
       var recipeName = $("<h5>").text(recipeNameGrab);
       recipeName.addClass("recipeName");
       recipeDiv.append(recipeName)
@@ -182,14 +190,6 @@ $(document).ready(function() {
       pic.attr("alt", response.title)
       recipeDiv.append(pic);
       console.log("recipe image URL: " + picGrab)
-
-      var recipeInfo = $("<div class='col s9'>");
-      var recipeSpoonURL = response.sourceUrl
-      console.log("recipe URL: " + recipeSpoonURL)
-
-      var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("linkBtn");
-      cookBook.append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
-      recipeInfo.append(cookBook);
 
       var dietType0 = response.diets[0];
       var dietType1 = response.diets[1];
@@ -212,8 +212,8 @@ $(document).ready(function() {
     //IF does not work move line 158 through 207 into here
     //First AJAX call for spoonacular API, necessary to gain recipe ID numbers for second API call
     var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
-    var spoonStartURL = "https://api.spoonacular.com/recipes/search?cuisine="
-    var spoonCuisine = "indian"
+    var spoonStartURL = "https://api.spoonacular.com/recipes/search?number=25&cuisine="
+    var spoonCuisine = emotionFood
     var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
     console.log(querySpoonURL)
     $.ajax({
@@ -221,9 +221,10 @@ $(document).ready(function() {
       method: "GET"
     }).then(function(response) {
       console.log(response)
-      var A = Math.floor(Math.random()*19);
-      var B = Math.floor(Math.random()*19);
-      var C = Math.floor(Math.random()*19);
+      console.log(emotionFood)
+      var A = Math.floor(Math.random()*25);
+      var B = Math.floor(Math.random()*25);
+      var C = Math.floor(Math.random()*25);
       recipeCall(response.results[A].id);
       recipeCall(response.results[B].id);
       recipeCall(response.results[C].id);
