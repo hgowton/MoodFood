@@ -36,13 +36,13 @@ $(document).ready(function() {
       var emotionType = responseFace.faces[0].attributes.emotion
       
       //console log each emotion every person in the 
-      console.log("anger: " + emotionType.anger)
-      console.log("disgust: " + emotionType.disgust)
-      console.log("fear: " + emotionType.fear)
-      console.log("happiness: " + emotionType.happiness)
-      console.log("sadness: " + emotionType.sadness)
-      console.log("surprise: " + emotionType.surprise)
-      console.log("neutral: " + emotionType.neutral)
+      // console.log("anger: " + emotionType.anger)
+      // console.log("disgust: " + emotionType.disgust)
+      // console.log("fear: " + emotionType.fear)
+      // console.log("happiness: " + emotionType.happiness)
+      // console.log("sadness: " + emotionType.sadness)
+      // console.log("surprise: " + emotionType.surprise)
+      // console.log("neutral: " + emotionType.neutral)
       var anger = emotionType.anger;
       var disgust = emotionType.disgust;
       var fear = emotionType.fear;
@@ -172,7 +172,6 @@ $(document).ready(function() {
       var recipeNameGrab = response.title;
       var recipeInfo = $("<div class='col s9'>");
       var recipeSpoonURL = response.sourceUrl
-      console.log("recipe URL: " + recipeSpoonURL)
 
       var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("linkBtn");
       cookBook.append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
@@ -189,14 +188,12 @@ $(document).ready(function() {
       pic.addClass("responsive-img");
       pic.attr("alt", response.title)
       recipeDiv.append(pic);
-      console.log("recipe image URL: " + picGrab)
 
       // Prints all special diet types to DOM
       var dietTypes = $("<p>");
       if (response.diets.length === 0) {
         dietTypes.append("No special diet types for this recipe.");
       } else{
-        console.log(response.diets.length);
         var diets = "";
         for (i=0; i<response.diets.length; i++) {
           diets = diets + response.diets[i] + ", "
@@ -206,7 +203,35 @@ $(document).ready(function() {
       dietTypes.addClass("diets")
       recipeInfo.append(dietTypes);
      
-     
+     //Prints Instructions to DOM
+     var insCall = response.analyzedInstructions[0];
+     var instructions = $("<p>");
+     var instList = $("<ol>");
+
+     if (insCall.steps.length === 0) {
+      instructions.append("Check out the recipe link for all recipe information");
+    } else if (insCall.steps.length < 6) {
+      instructions.append("<b>Instructions:</b>")
+      for (i=0; i<insCall.steps.length; i++) {
+        var insStep = $("<li>").append("•" + insCall.steps[i].step)
+        instList.append(insStep);
+      }
+    }else if (insCall.steps.length > 6) {
+      instructions.append("<b>Instructions:</b>")
+      for (i=0; i<insCall.steps[5]; i++) {
+        var insStep = $("<li>" + "•" + insCall.steps[i].step + "</li>");
+        instList.append(insStep);
+      }
+      var moreIns = $("<p>")
+      moreIns.append("Use the recipe link for the continued recipe instructions.")
+    }
+    instructions.addClass("recInstructions")
+    recipeInfo.append(instructions);
+    recipeInfo.append(instList);
+    recipeInfo.append(moreIns);
+
+
+
      
      
       var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
