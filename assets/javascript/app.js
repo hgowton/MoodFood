@@ -191,12 +191,22 @@ $(document).ready(function() {
       recipeDiv.append(pic);
       console.log("recipe image URL: " + picGrab)
 
-      var dietType0 = response.diets[0];
-      var dietType1 = response.diets[1];
-      console.log(dietType1)
-      var specialDiets = $("<p>").text("Diet Types: " + dietType0 + ", " + dietType1);
-      specialDiets.addClass("diets")
-      recipeInfo.append(specialDiets);
+      // Prints all special diet types to DOM
+      var dietTypes = $("<p>");
+      if (response.diets.length === 0) {
+        dietTypes.append("No special diet types for this recipe.");
+      } else{
+        console.log(response.diets.length);
+        var diets = "";
+        for (i=0; i<response.diets.length; i++) {
+          diets = diets + response.diets[i] + ", "
+        }
+        dietTypes.append("Diet Types: " + diets)
+      }
+      dietTypes.addClass("diets")
+      recipeInfo.append(dietTypes);
+     
+     
      
      
       var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
