@@ -1,15 +1,8 @@
 $(document).ready(function() {
 
   var emotionFood = "";
-  
-  //Yelp API
-  var term = "cocktail";
-  var place = "19335"; //input box zip code box
-  //location -- distance
-  var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&location=" + place;
-  var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
-  
+  var place = "19335"; //will be replaced by input box zip code box
+
   //User selects Recipe Button to display recipes based on Mood
   $("#submitUserInfo").on("click", function(event) {
     event.preventDefault();
@@ -19,10 +12,7 @@ $(document).ready(function() {
     console.log("location: " + place)
     console.log("userage: " + age)
     
-    //need to output emotion
-    //request parameter of file upload image_file
-    //switched out exampleURL for userImageURL 
-    // var userImageURL = $("#userImage").val().trim();
+    //Face++ API Call 
     var faceURL = "https://api-us.faceplusplus.com/facepp/v3/detect?";
     var apiKeyFace = "api_key=Il2jdGkez5KA4j8vgq3ifaATjB6Wqoh3&api_secret=-e33xUg4LjDI-oEpxDhNVCircjdXMPo2";
     var returnAtt = "&return_attributes=emotion"
@@ -154,6 +144,60 @@ $(document).ready(function() {
       }  
     })  
   })
+
+
+  function recipeCall2 () {
+  // recipe query url FIX
+  var edamamQuery = "https://api.edamam.com/search?q=" + 
+  emotionFood + "&app_id=1cf40488&app_key=a1eaff5b1da4a145a0967af7fbfdfd0b";
+
+  // page randomizer
+  var r = Math.floor(Math.random() * 20 + 1);
+
+          
+   // EDAMAM recipe API call
+   $.ajax({
+    url: edamamQuery,
+    method: "GET",
+  }).then(function(response) {
+    
+    // assign API response to var for modularity
+    var recipes = response.hits
+    console.log(recipes);
+
+    for(i=0; i<4; i++) {
+      var recipeDiv = $("<div class='col s3'>").append(
+        $("<img>").attr("src", recipes[i].recipe.image).addClass("picture responsive-img").attr("alt", recipes[i].recipe.label)
+      );
+
+      var recipeInfo = $("<div class='col s9'>").append(
+        //add cookbook image linked to recipe's website
+        $("<a target='_blank'>").attr("href", recipes[i].recipe.url).addClass("linkBtn").append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>"),
+        //add name of recipe
+        $("<h5>").text(recipes[i].recipe.label).addClass("recipeName"),
+        $("<p>").text("Health Labels: ")
+      )
+
+      var healthLabel = $("<p>").addClass("health");
+
+      if (recipes[i].recipe.healthLabels.length === 0) {
+        healthLabel.append("This recipe has no special health labels");
+      } else {
+        var diets = $("<ul>")
+        var health = recipes[i].recipe.healthLabels
+        for (j=0; j< health.length; j++) {
+          var healthLab = $("<li>").text(" •" + health[j]);
+          diets.append(healthLab)
+        }
+
+        recipeInfo.append(diets);
+      }
+
+      var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); 
+      $("#table").prepend(row);
+    }
+  });
+};
   
   function recipeCall (recipeNumber) {
     var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
@@ -234,7 +278,7 @@ $(document).ready(function() {
 
      
      
-      var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); //+ recipeInfo at some point
+      var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); 
       $("#table").prepend(row);
 
       return response
@@ -244,26 +288,8 @@ $(document).ready(function() {
   //User selects Recipe Button to display recipes based on Mood
   //Second spoonacular API call, needed to display information for each recipe
   $("#recipebtn").on("click", function(){
-    //IF does not work move line 158 through 207 into here
-    //First AJAX call for spoonacular API, necessary to gain recipe ID numbers for second API call
-    var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
-    var spoonStartURL = "https://api.spoonacular.com/recipes/search?number=25&cuisine="
-    var spoonCuisine = emotionFood
-    var querySpoonURL = spoonStartURL + spoonCuisine + spoonAPI
-    console.log(querySpoonURL)
-    $.ajax({
-      url: querySpoonURL,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response)
-      console.log(emotionFood)
-      var A = Math.floor(Math.random()*25);
-      var B = Math.floor(Math.random()*25);
-      var C = Math.floor(Math.random()*25);
-      recipeCall(response.results[A].id);
-      recipeCall(response.results[B].id);
-      recipeCall(response.results[C].id);
-    })
+    recipeCall2();
+
   })
   
   function rrCall (response){
@@ -279,8 +305,7 @@ $(document).ready(function() {
         
         var picGrab = restCall.image_url;
         var pic = $("<img>").attr("src", picGrab);
-        pic.addClass("picture")
-        pic.addClass("responsive-img");
+        pic.addClass("picture responsive-img")
         pic.attr("alt","restaurant image")
         restaurantDiv.append(pic);
         
@@ -366,24 +391,3 @@ $(document).ready(function() {
   });
 }); 
 
-
-
-//ways we could possibly make this work based on "mood"
-  //1)put in each emotion if statement the onclick restaurant and onclick recipe function
-        // just change the for loop number to N (N for Number) and set N to a different number in each if statement 
-        // then it will grab from a different parts of the yelp API-outputting different restaurants or different recipes
-          //example: if (anger){
-            // N=6
-            //for (var i=N; i< N+5; i++){
-            // (the code that outputs the information)
-    //issue: with this one is its pretty DRY--like a lot of repeating that we should probably avoid, even if it is just copy and pasting 
-
-  //2) try and grab the emotion button that has been displayed
-        // set each emotion btn equal to a number and input that number into the for loop
-          //same concept as the above situation, it'll grab different objects in the array
-      //issue: this would solve the DRY issue from above but im not sure if scope would allow us to do this. 
-
-  //3) set the variable 'term' for restaurant API and 'spoonCuisine' for recipe API equal to whatever is the strongest emotion 
-    //this would probably follow option 2) in the way that we would try to grab the emotion button that is displayed
-    // have the API do a search for the food based on the emotion
-    //issue: i'm not sure if typing in an emotion as a key word would mess up the api's but i'm thinking this would probably be the best option ig it works
