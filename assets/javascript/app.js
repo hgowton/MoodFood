@@ -161,11 +161,11 @@ $(document).ready(function() {
     method: "GET",
   }).then(function(response) {
     
-    // assign API response to var for modularity
     var recipes = response.hits
-    console.log(recipes);
 
-    for(i=0; i<4; i++) {
+    //generates random number to show different recipes
+    var R = Math.floor(Math.random()*6);
+    for (var i=R; i<R+3; i++){
       var recipeDiv = $("<div class='col s3'>").append(
         $("<img>").attr("src", recipes[i].recipe.image).addClass("picture responsive-img").attr("alt", recipes[i].recipe.label)
       );
@@ -175,8 +175,8 @@ $(document).ready(function() {
         $("<a target='_blank'>").attr("href", recipes[i].recipe.url).addClass("linkBtn").append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>"),
         //add name of recipe
         $("<h5>").text(recipes[i].recipe.label).addClass("recipeName"),
-        $("<p>").text("Yields: " + recipes[i].recipe.yield),
-        $("<p>").text("Health Labels: ").addClass("health")
+        $("<p>").text("Yields: " + recipes[i].recipe.yield).addClass("info"),
+        $("<p>").text("Health Labels: ").addClass("health info")
       )
 
       if (recipes[i].recipe.healthLabels.length === 0) {
@@ -185,13 +185,13 @@ $(document).ready(function() {
         var diets = $("<ul>")
         var health = recipes[i].recipe.healthLabels
         for (j=0; j< health.length; j++) {
-          var healthLab = $("<li>").text(" •" + health[j]);
+          var healthLab = $("<li>").text("  • " + health[j]);
           diets.append(healthLab)
         }
         recipeInfo.append(diets);
       }
 
-      var ingredientList = $("<p>").text("Ingredients: ").addClass("recInfo");
+      var ingredientList = $("<p>").text("Ingredients: ").addClass("info");
       recipeInfo.append(ingredientList)
 
       var list = $("<ul>");
@@ -210,98 +210,12 @@ $(document).ready(function() {
     }
   });
 };
-  
-  function recipeCall (recipeNumber) {
-    var spoonAPI = "&apiKey=181dc4981af649a09212141dc7c2424b"
-    var recipeBasics = "https://api.spoonacular.com/recipes/"
-    var recipeInfo = "/information?includeNutrition=false"
-    var recipeURL = recipeBasics + recipeNumber + recipeInfo + spoonAPI
-    console.log(recipeURL)
-    $.ajax({
-      url: recipeURL,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response)
 
-      var recipeDiv = $("<div class='col s3'>");
-      
-      var recipeNameGrab = response.title;
-      var recipeInfo = $("<div class='col s9'>");
-      var recipeSpoonURL = response.sourceUrl
-
-      var cookBook = $("<a target='_blank'>").attr("href", recipeSpoonURL).addClass("linkBtn");
-      cookBook.append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>")
-      recipeInfo.append(cookBook);
-
-      var recipeName = $("<h5>").text(recipeNameGrab);
-      recipeName.addClass("recipeName");
-      recipeDiv.append(recipeName)
-      console.log("recipe name: ", recipeNameGrab)      
-  
-      var picGrab = response.image;
-      var pic = $("<img>").attr("src", picGrab);
-      pic.addClass("picture")
-      pic.addClass("responsive-img");
-      pic.attr("alt", response.title)
-      recipeDiv.append(pic);
-
-      // Prints all special diet types to DOM
-      var dietTypes = $("<p>");
-      if (response.diets.length === 0) {
-        dietTypes.append("No special diet types for this recipe.");
-      } else{
-        var diets = "";
-        for (i=0; i<response.diets.length; i++) {
-          diets = diets + response.diets[i] + ", "
-        }
-        dietTypes.append("Diet Types: " + diets)
-      }
-      dietTypes.addClass("diets")
-      recipeInfo.append(dietTypes);
-     
-     //Prints Instructions to DOM
-     var insCall = response.analyzedInstructions[0];
-     var instructions = $("<p>");
-     var instList = $("<ol>");
-
-     if (insCall.steps.length === 0) {
-      instructions.append("Check out the recipe link for all recipe information");
-    } else if (insCall.steps.length < 6) {
-      instructions.append("<b>Instructions:</b>")
-      for (i=0; i<insCall.steps.length; i++) {
-        var insStep = $("<li>").append("•" + insCall.steps[i].step)
-        instList.append(insStep);
-      }
-    }else if (insCall.steps.length > 6) {
-      instructions.append("<b>Instructions:</b>")
-      for (i=0; i<insCall.steps[5]; i++) {
-        var insStep = $("<li>" + "•" + insCall.steps[i].step + "</li>");
-        instList.append(insStep);
-      }
-      var moreIns = $("<p>")
-      moreIns.append("Use the recipe link for the continued recipe instructions.")
-    }
-    instructions.addClass("recInstructions")
-    recipeInfo.append(instructions);
-    recipeInfo.append(instList);
-    recipeInfo.append(moreIns);
-
-
-
-     
-     
-      var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); 
-      $("#table").prepend(row);
-
-      return response
-    })
-  }
   
   //User selects Recipe Button to display recipes based on Mood
   //Second spoonacular API call, needed to display information for each recipe
   $("#recipebtn").on("click", function(){
     recipeCall2();
-
   })
   
   function rrCall (response){

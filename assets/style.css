@@ -87,4 +87,8 @@ color: black;
 .rating, .diets {
     margin-top: 65px;
 }
+
+.info {
+    font-weight: bold;
+}
   
