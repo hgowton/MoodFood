@@ -175,13 +175,12 @@ $(document).ready(function() {
         $("<a target='_blank'>").attr("href", recipes[i].recipe.url).addClass("linkBtn").append("<img src='./assets/images/recipe.png' id='recipeImg' alt='cookbook image'>"),
         //add name of recipe
         $("<h5>").text(recipes[i].recipe.label).addClass("recipeName"),
-        $("<p>").text("Health Labels: ")
+        $("<p>").text("Yields: " + recipes[i].recipe.yield),
+        $("<p>").text("Health Labels: ").addClass("health")
       )
 
-      var healthLabel = $("<p>").addClass("health");
-
       if (recipes[i].recipe.healthLabels.length === 0) {
-        healthLabel.append("This recipe has no special health labels");
+        $(".health").append("This recipe has no special health labels");
       } else {
         var diets = $("<ul>")
         var health = recipes[i].recipe.healthLabels
@@ -189,9 +188,22 @@ $(document).ready(function() {
           var healthLab = $("<li>").text(" •" + health[j]);
           diets.append(healthLab)
         }
-
         recipeInfo.append(diets);
       }
+
+      var ingredientList = $("<p>").text("Ingredients: ").addClass("recInfo");
+      recipeInfo.append(ingredientList)
+
+      var list = $("<ul>");
+      var ingredients = recipes[i].recipe.ingredientLines;
+      for (k=0; k<ingredients.length; k++) {
+        var item = $("<li>").text("  • " + ingredients[k]);
+        list.append(item);
+      }
+      recipeInfo.append(list)
+
+
+
 
       var row = $("<div class='row suggestedInfo'>").append(recipeDiv, recipeInfo); 
       $("#table").prepend(row);
