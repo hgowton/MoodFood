@@ -290,6 +290,7 @@ $(document).ready(function() {
       }
     }).then(function(response) {
       console.log("this is response", response);
+      console.log(url);
       rrCall(response);
     });
   }); 
