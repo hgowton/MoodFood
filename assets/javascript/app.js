@@ -275,12 +275,13 @@ $(document).ready(function() {
   $("#restaurantBtn").on("click", function(){
     //Yelp API
     var searchEmotion = emotionFood;
-    var term = "restaurant"
-    console.log("zip code: ", place)
-    console.log("emotion of food: " + emotionFood)
+    // var term = "restaurant"
+    // console.log("zip code: ", place)
+    // console.log("emotion of food: " + emotionFood)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=restaurant&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
+    console.log(queryURL)
     
     $.ajax({
       url: corsAnywhereUrl + queryURL,
@@ -289,8 +290,8 @@ $(document).ready(function() {
         "Authorization" : "Bearer " + apiKey
       }
     }).then(function(response) {
-      console.log("this is response", response);
-      console.log(url);
+      // console.log("this is response", response);
+      // console.log(url);
       rrCall(response);
     });
   }); 
@@ -298,11 +299,11 @@ $(document).ready(function() {
   //User selects Coctail Button to display Cocktail selections based on Mood
   $("#cocktailBtn").on("click", function(){
     //Yelp API
-    var term = "cocktail";
+    // var term = "cocktail";
     var searchEmotion = emotionFood;
-    console.log("zip code: ", place)
+    // console.log("zip code: ", place)
     var corsAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + term + "&" + searchEmotion + "&location=" + place;
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=cocktail&" + searchEmotion + "&location=" + place;
     var apiKey = "wOVQkre9W01lZIZy7IrkwUqyLlBieuCZ623n9TLVFb3m6_DLo4zuOP0rkvFyyZGOjymiYtqqO4F-ej7lTmasoSvP5FrEYKDsun9zhiiLwxqDqtBqFhNWH1pAGfE-XnYx"
     
     $.ajax({
