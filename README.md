@@ -13,9 +13,27 @@
    * zip code
    ![poll](/assets/images/pictureSelect.gif)
 
-the The user selects a human face image based off emotion then pastes the image address into the app, next the user will input their age and zip code and click the "What's my Mood?"
-- Based on the user's input an emoticon will appear displaying their mood. 
-- Next the user can select whether they would like a recipe, restaurant or cocktail. 
+1. Click *What's my Mood?* and the Face API will decipher your current mood.
+1. Select what you are in the mood for ![choice](assets/images/choice.png)
+1. You will be provided with 3 options based on your mood, location, and selection.
+   * *Restaurant or Cocktail*: 
+      * name
+      * rating 
+      * address
+      * phone number
+      * link to the restaurant's website on Yelp
+   
+   ![restaurant](/assets/images/restaurantInfo.png)
+
+   * *Recipe*:
+      * name
+      * servings
+      * health labels
+      * ingredients
+      * link to the original recipe's website
+   
+   ![recipe](/assets/images/recipeInfo.png)
+
 
 ## Tech Used
 - HTML
